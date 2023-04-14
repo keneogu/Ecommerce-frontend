@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-import Cart from "./components/Cart";
+import Cart from "./containers/Cart/Cart";
 import Navbar from "./components/Navbar";
 import NotFound from "./components/NotFound";
 import About from "./containers/About/About";
@@ -10,6 +12,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+      <ToastContainer />
         <Navbar />
         <Routes>
           <Route path="/" exact element={<Home />} />
