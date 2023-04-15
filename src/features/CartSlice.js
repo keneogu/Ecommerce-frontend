@@ -70,7 +70,7 @@ const cartSlice = createSlice({
     },
     clearCart(state, action) {
       state.cartItems = [];
-      toast.error(`${action.payload.name} removed from cart`, {
+      toast.error('cart cleared', {
         position: "bottom-left",
       });
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
