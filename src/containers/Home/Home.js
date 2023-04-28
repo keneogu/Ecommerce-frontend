@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from "../../features/ProductSlice";
 import ProductCard from './ProductCard';
 import Head from '../../components/layout/Head'
+import Loader from '../../components/layout/Loader';
 
 const Home = () => {
-	const { isLoading, products } = useSelector(state => state.products.products)
+	const { products } = useSelector(state => state.products.products)
+	const { isLoading } = useSelector(state => state.products)
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -15,7 +17,7 @@ const Home = () => {
 
 	return (
 		<>
-			{isLoading ? <h1>Loading...</h1> : (
+			{isLoading ? <Loader /> : (
 				<>
 					<Head title={'Best Online Shoping platform'} />
 					<div className="mt-8">
