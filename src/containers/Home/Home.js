@@ -1,41 +1,35 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { useGetAllProductsQuery } from '../../features/ProductApi'
-import { addToCart } from '../../features/CartSlice'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts } from "../../features/ProductSlice";
+import ProductCard from './ProductCard';
+import Head from '../../components/layout/Head'
 
-const Home = () => { 
-	const {data, error, isLoading} = useGetAllProductsQuery()
+const Home = () => {
+	const { isLoading, products } = useSelector(state => state.products.products)
 	const dispatch = useDispatch();
-	let navigate = useNavigate();
 
-	const handleAddToCart = (product) => {
-		dispatch(addToCart(product));
-		navigate("/cart")
-	};
-	
+	useEffect(() => {
+		dispatch(fetchProducts())
+	}, [dispatch])
+
+
 	return (
-		<div className="mt-8">
-			{isLoading ? <p>Loading...</p> : error ? <p>An error occured...</p> : 
+		<>
+			{isLoading ? <h1>Loading...</h1> : (
 				<>
-				<div>Home</div>
-				<h1>Welcome to my home page top G</h1>
-				<div>
-					{data?.map(prod => 
-						<div key={prod.id} className="product">
-							<h3>{prod.name}</h3>
-							<img src={prod.image} alt={prod.name} />
-							<div className='span'>
-								<span>{prod.desc}</span>
-								<span className="price">${prod.price}</span>
-							</div>
-							<button onClick={() => handleAddToCart(prod)}>Add to cart</button>
+					<Head title={'Best Online Shoping platform'} />
+					<div className="mt-8">
+
+						<h4 className='text-gray-400 text-xl font-bold capitalize'>Latest Product</h4>
+						<div className="container mx-auto">
+			 {products?.map(product => (
+							<ProductCard key={product._id} product={product} />
+				))}
 						</div>
-						)}
-				</div>
+					</div>
 				</>
-			}
-		</div>
+			)}
+		</>
 	)
 }
 
