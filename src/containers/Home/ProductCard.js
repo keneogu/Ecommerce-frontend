@@ -12,7 +12,7 @@ const ProductCard = ({product}) => {
 								<div className="p-2">
 									<span className="inline-block px-2 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">{product.category}</span>
 									<h2 className="mt-2 mb-2  font-bold">{product.name}</h2>
-									<p className="text-sm">{product.desc}</p>
+									<p className="text-sm">{product.desc.length < 60 ? product.desc : product.desc.substr(0, 60) + "..."}</p>
 									<div className="mt-3 flex items-center">
 										<span className="text-sm font-semibold">ab</span>&nbsp;<span className="font-bold text-xl">{product.price}</span>&nbsp;<span className="text-sm font-semibold">€</span>
 									</div>
