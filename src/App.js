@@ -6,8 +6,8 @@ import Cart from "./containers/Cart/Cart";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
-import About from "./containers/About/About";
 import Home from "./containers/Home/Home";
+import ProductDetail from "./containers/ProductDetail";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" exact element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/notfound" replace />} />
