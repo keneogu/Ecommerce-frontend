@@ -19,7 +19,7 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductDetails = createAsyncThunk(
 	"products/fetchProductDetails",
 	async (id) => {
-		const response =	await axios.get(`/api/v1/products/${id}`)
+		const response =	await axios.get(`/api/v1/product/${id}`)
 		return response?.data
 	}
 )
@@ -44,11 +44,11 @@ const ProductSlice = createSlice({
 		},
 		[fetchProductDetails.fulfilled]: (state, action) => {
 			state.status = "success";
-			state.isLoading = true;
-			// return {...state, productDetail: payload};
+			state.isLoading = false;
 			state.productDetail = action.payload
 		},
 	}
 });
 
+export const getSelectedProduct = (state) => state.products.productDetail;
 export default ProductSlice.reducer;
