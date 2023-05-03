@@ -1,10 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import {SearchContext} from "./context/SearchContext";
+import Search from './layout/Search';
 
 const Navbar = () => {
+	const {searchParams, setSearchParams, search, setSearch} = useContext(SearchContext);
 	const {cartTotalQuantity} = useSelector(state => state.cart);
+	const navigate = useNavigate()
 
 	return (
 		<div className='flex justify-between text-white bg-kenz-400 h-14 items-center px-4'>
@@ -13,8 +17,13 @@ const Navbar = () => {
 			</div>
 
 			<div className='bg-white border-kenz-100 border-4 rounded-md px-2 py-2 my-3'>
-				<input type='text' className='bg-lime-100' placeholder='Enter Product Name'/>
-				<button><FaSearch className='text-black w-6 h-6 bg-gray-100' /></button>
+			 <Search 
+				navigate={navigate} 
+				searchParams={searchParams} 
+				setSearchParams={setSearchParams}
+				search={search}
+				setSearch={setSearch}
+			 />
 			</div>
 			
 			<nav className='flex flex-row items-center px-2'>
