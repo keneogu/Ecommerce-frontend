@@ -10,10 +10,12 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk(
 	"products/fetchproducts",
-	async (search = "", currentPage = 1) => {
+	async (features) => {
+		const {search = '', currentPage = 1, price} = features
 		const response =	await axios.get(
-			`/api/v1/products?search=${search}&page=${currentPage}`
-			// `/api/v1/products?page=${currentPage}`
+			search ?
+			`/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}` :
+			`/api/v1/products?page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`
 			)
 		return response?.data
 	}
@@ -53,6 +55,5 @@ const ProductSlice = createSlice({
 	}
 });
 
-export const { setSearch } = ProductSlice.actions;
 export const getSelectedProduct = (state) => state.products.productDetail;
 export default ProductSlice.reducer;
