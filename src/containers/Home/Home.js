@@ -12,20 +12,43 @@ const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 
 const Home = () => {
+
 	const search = useSelector(state =>  state.products.search)
-	console.log(search)
+	const { products, productCount, perPage, filteredProductsCount } = useSelector(state => state.products.products)
+	const { isLoading } = useSelector(state => state.products)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [price, setPrice] = useState([1, 1000])
-	const { products, productCount, perPage } = useSelector(state => state.products.products)
-	const { isLoading } = useSelector(state => state.products)
+	const [category, setCategory] = useState('')
+
+	const categories = [
+		"Electronics",
+		"Accessories",
+		"Beverages",
+		'Food/Fruit',
+		"Fashion",
+		"Cosmetics",
+		"Phones-tablets",
+		"Computing",
+		"Beauty",
+		"Furniture",
+		"Home-appliances",
+		"Sports",
+	]
+	
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-			dispatch(fetchProducts({search: search.replace(/^\s+|\s+$/gm,''), currentPage: currentPage, price: price}))
-	}, [dispatch, search, currentPage, price]);
+		dispatch(fetchProducts({search: search.replace(/^\s+|\s+$/gm,''), currentPage: currentPage, price: price, category: category}))
+	}, [dispatch, search, currentPage, price, category]);
 
 	function setCurrentPageNum(pageNumber){
 		setCurrentPage(pageNumber)
+	}
+
+	let count = productCount;
+
+	if(search) {
+		count = filteredProductsCount
 	}
 
 	return (
@@ -56,6 +79,20 @@ const Home = () => {
 											value={price}
 											onChange={price => setPrice(price)}
 											/>
+
+											<hr />
+
+											<div className='mt-5'>
+												<h4>
+													Categories
+												</h4>
+
+												<ul className='pl-0'>
+													{categories.map(category => (
+														<li key={category} style={{cursor: 'pointer', listStyleType: "none"}} onClick={() => setCategory(category)}>{category}</li>
+													))}
+												</ul>
+											</div>
 										</div>
 									</div>
 									<div className="grid grid-rows-1">
@@ -74,12 +111,12 @@ const Home = () => {
 							
 						</div>
 
-						{perPage <= productCount && (
+						{perPage <= count && (
 							<div className='flex justify-center mt-5'>
 								<Pagination
 									activePage={currentPage}
 									itemsCountPerPage={perPage}
-									totalItemsCount={productCount}
+									totalItemsCount={count}
 									pageRangeDisplayed={5}
 									onChange={setCurrentPageNum}
 								/>
