@@ -6,6 +6,7 @@ const initialState = {
 	status: null,
 	isLoading: true,
 	productDetail: {},
+	search: ''
 }
 
 export const fetchProducts = createAsyncThunk(
@@ -32,7 +33,11 @@ export const fetchProductDetails = createAsyncThunk(
 const ProductSlice = createSlice({
 	name: "products",
 	initialState,
-	reducers: {},
+	reducers: {
+		searchItems:(state, action) => {
+			state.search = action.payload
+		}
+	},
 	extraReducers: {
 		[fetchProducts.pending]: (state, action) => {
 			state.status = "pending";
@@ -55,5 +60,6 @@ const ProductSlice = createSlice({
 	}
 });
 
+export const { searchItems } = ProductSlice.actions
 export const getSelectedProduct = (state) => state.products.productDetail;
 export default ProductSlice.reducer;
