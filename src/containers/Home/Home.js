@@ -1,31 +1,30 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts} from "../../features/ProductSlice";
-import {SearchContext} from "../../components/context/SearchContext";
-
-// import { useParams } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import Head from '../../components/layout/Head'
 import Loader from '../../components/layout/Loader';
 import Pagination from 'react-js-pagination'
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const Range = createSliderWithTooltip(Slider.Range);
 
 const Home = () => {
-	// const { search } = useParams()
-	const { search } = useContext(SearchContext);
-	// const search = useSelector(state => state.products.search)
+	const search = useSelector(state =>  state.products.search)
+	console.log(search)
 	const [currentPage, setCurrentPage] = useState(1)
+	const [price, setPrice] = useState([1, 1000])
 	const { products, productCount, perPage } = useSelector(state => state.products.products)
 	const { isLoading } = useSelector(state => state.products)
 	const dispatch = useDispatch();
 
-	// const search = match.params.search
-
 	useEffect(() => {
-		// setSearch(search)
-		dispatch(fetchProducts(search, currentPage))
-	}, [dispatch, search, currentPage]);
+			dispatch(fetchProducts({search: search.replace(/^\s+|\s+$/gm,''), currentPage: currentPage, price: price}))
+	}, [dispatch, search, currentPage, price]);
 
-	function setCurrentPageNum(pageNumber) {
+	function setCurrentPageNum(pageNumber){
 		setCurrentPage(pageNumber)
 	}
 
@@ -38,9 +37,41 @@ const Home = () => {
 
 						<h4 className='text-gray-400 text-xl font-bold capitalize'>Latest Product</h4>
 						<div className="container mx-auto">
-							{products?.map(product => (
+							{ search ? (
+								<>
+									<div>
+										<div>
+											<Range marks={{
+												1 : `$1`,
+												1000 : `$1000`
+											}}
+											min={1}
+											max={1000}
+											defaultValue={[1, 1000]}
+											tipFormatter={value => `$${value}`}
+											tipProps={{
+												placement: "top",
+												visible: true
+											}}
+											value={price}
+											onChange={price => setPrice(price)}
+											/>
+										</div>
+									</div>
+									<div className="grid grid-rows-1">
+										<div className="row">
+										{products?.map(product => (
+											<ProductCard key={product._id} product={product} />
+										))}
+										</div>
+									</div>
+								</>
+							) : (
+								products?.map(product => (
 								<ProductCard key={product._id} product={product} />
-							))}
+							))
+							)}
+							
 						</div>
 
 						{perPage <= productCount && (
