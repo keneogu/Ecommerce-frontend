@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import {searchItems} from "../features/ProductSlice"
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-import {SearchContext} from "./context/SearchContext";
 import Search from './layout/Search';
 
 const Navbar = () => {
-	const {searchParams, setSearchParams, search, setSearch} = useContext(SearchContext);
 	const {cartTotalQuantity} = useSelector(state => state.cart);
 	const navigate = useNavigate()
 
@@ -18,11 +17,8 @@ const Navbar = () => {
 
 			<div className='bg-white border-kenz-100 border-4 rounded-md px-2 py-2 my-3'>
 			 <Search 
-				navigate={navigate} 
-				searchParams={searchParams} 
-				setSearchParams={setSearchParams}
-				search={search}
-				setSearch={setSearch}
+				navigate={navigate}
+				searchItems={searchItems}
 			 />
 			</div>
 			
