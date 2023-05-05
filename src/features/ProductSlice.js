@@ -12,11 +12,11 @@ const initialState = {
 export const fetchProducts = createAsyncThunk(
 	"products/fetchproducts",
 	async (features) => {
-		const {search = '', currentPage = 1, price} = features
+		const {search = '', currentPage = 1, price, category} = features
 		const response =	await axios.get(
-			search ?
-			`/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}` :
-			`/api/v1/products?page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+			category ?
+			`/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}` :
+			`/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`
 			)
 		return response?.data
 	}
