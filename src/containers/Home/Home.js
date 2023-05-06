@@ -19,6 +19,7 @@ const Home = () => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [price, setPrice] = useState([1, 1000])
 	const [category, setCategory] = useState('')
+	const [rating, setRating] = useState(0)
 
 	const categories = [
 		"Electronics",
@@ -38,8 +39,8 @@ const Home = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchProducts({search: search.replace(/^\s+|\s+$/gm,''), currentPage: currentPage, price: price, category: category}))
-	}, [dispatch, search, currentPage, price, category]);
+		dispatch(fetchProducts({search: search.replace(/^\s+|\s+$/gm,''), currentPage: currentPage, price: price, category: category, ratings: rating}))
+	}, [dispatch, search, currentPage, price, category, rating]);
 
 	function setCurrentPageNum(pageNumber){
 		setCurrentPage(pageNumber)
@@ -90,6 +91,29 @@ const Home = () => {
 												<ul className='pl-0'>
 													{categories.map(category => (
 														<li key={category} style={{cursor: 'pointer', listStyleType: "none"}} onClick={() => setCategory(category)}>{category}</li>
+													))}
+												</ul>
+											</div>
+
+											<hr />
+
+											<div className='mt-5'>
+												<h4>
+													Ratings
+												</h4>
+
+												<ul className='pl-0'>
+													{[5,4,3,2,1].map(star => (
+														<li key={star} style={{cursor: 'pointer', listStyleType: "none"}} onClick={() => setRating(star)}>
+															<div className="rating-outer">
+																<div className="rating-inner"
+																	style={{
+																			width: `${star * 20}%`
+																	}}
+																>
+																</div>
+															</div>
+														</li>
 													))}
 												</ul>
 											</div>
