@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import Home from "./containers/Home/Home";
 import ProductDetail from "./containers/ProductDetail";
+import Login from './containers/User/Login';
+import Register from './containers/User/Register';
 
 function App() {
   
@@ -21,6 +23,8 @@ function App() {
             <Route path="/" exact element={<Home />} />
             <Route path="/search/:search" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/notfound" element={<NotFound />} />
             <Route path="*" element={<Navigate to="/notfound" replace />} />
