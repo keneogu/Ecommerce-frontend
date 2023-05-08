@@ -23,7 +23,7 @@ const Navbar = () => {
 			</div>
 			
 			<nav className='flex flex-row items-center px-2'>
-				<Link to="/about"><p>Login</p></Link>
+				<Link to="/login"><p>Login</p></Link>
 				<Link to="/cart">
 					<div className='flex'>
 						<p><FaShoppingCart className='text-orange-700' /></p>
