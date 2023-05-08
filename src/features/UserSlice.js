@@ -16,13 +16,19 @@ export const loginUser = createAsyncThunk(
 				'Content-Type': 'application/json',
 			},
 		}
+		
+		const response =	await axios.post('/api/v1/login', userData, config)
 
-		const response = await axios.post('/api/v1/login', userData, config)
-
-		if (response.data) {
+		if(response.data) {
 			localStorage.setItem('user', JSON.stringify(response.data))
 		}
 		return response.data
+	}
+)
+
+export const logout = createAsyncThunk(
+	"user/logout", async () => {
+		localStorage.removeItem('user')
 	}
 )
 
@@ -44,7 +50,12 @@ const UserSlice = createSlice({
 			state.isLoading = false
 			state.isAuthenticated = false
 			state.user = null
-		}
+		},
+		[logout.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = true
+			state.user = null
+		},
 	}
 })
 
