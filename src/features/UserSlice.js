@@ -8,6 +8,23 @@ const initialState = {
 	isAuthenticated: false
 }
 
+export const registerUser = createAsyncThunk(
+	"user/register", async(userData) => {
+		const config = {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		}
+		
+		const response =	await axios.post('/api/v1/register', userData, config)
+
+		if(response.data) {
+			localStorage.setItem('user', JSON.stringify(response.data))
+		}
+		return response.data
+	}
+)
+
 export const loginUser = createAsyncThunk(
 	"user/login",
 	async (userData) => {
@@ -37,6 +54,20 @@ const UserSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: {
+		[registerUser.pending]: (state, action) => {
+			state.isLoading = true
+			state.isAuthenticated = false
+		},
+		[registerUser.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = true
+			state.user = action.payload
+		},
+		[registerUser.rejected]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = false
+			state.user = null
+		},
 		[loginUser.pending]: (state, action) => {
 			state.isLoading = true
 			state.isAuthenticated = false
