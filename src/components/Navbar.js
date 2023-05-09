@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { searchItems } from "../features/ProductSlice";
+import { logout } from "../features/UserSlice";
 import { FaShoppingCart } from "react-icons/fa";
 import Search from "./layout/Search";
 
@@ -12,6 +13,10 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+	const handleLogout = () => {
+		dispatch(logout());
+	}
 
   return (
     <div className="flex justify-between text-white bg-kenz-400 h-14 items-center px-4">
@@ -96,9 +101,10 @@ const Navbar = () => {
               </ul>
               <div className="py-2">
                 <Link
-                  to="/logout"
+                  to="/"
                   className="block px-4 py-2 text-sm text-red-400 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
+									onClick={handleLogout}
+								>
                   Sign out
                 </Link>
               </div>
