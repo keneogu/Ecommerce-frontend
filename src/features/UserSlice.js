@@ -49,6 +49,12 @@ export const logout = createAsyncThunk(
 	}
 )
 
+export const loadUser = createAsyncThunk("user/loadUser",
+	async () => {
+		const response =	await axios.get('/api/v1/me')
+		return response?.data
+})
+
 const UserSlice = createSlice({
 	name: "user",
 	initialState,
@@ -78,6 +84,20 @@ const UserSlice = createSlice({
 			state.user = action.payload
 		},
 		[loginUser.rejected]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = false
+			state.user = null
+		},
+		[loadUser.pending]: (state, action) => {
+			state.isLoading = true
+			state.isAuthenticated = false
+		},
+		[loadUser.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = true
+			state.user = action.payload
+		},
+		[loadUser.rejected]: (state, action) => {
 			state.isLoading = false
 			state.isAuthenticated = false
 			state.user = null
