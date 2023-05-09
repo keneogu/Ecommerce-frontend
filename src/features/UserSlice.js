@@ -45,7 +45,11 @@ export const loginUser = createAsyncThunk(
 
 export const logout = createAsyncThunk(
 	"user/logout", async () => {
-		localStorage.removeItem('user')
+		const response =	await axios.get('/api/v1/logout')
+		if(response.data) {
+			localStorage.removeItem('user')
+		}
+		return response?.data
 	}
 )
 
