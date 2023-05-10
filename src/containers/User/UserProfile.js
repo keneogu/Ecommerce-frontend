@@ -6,7 +6,7 @@ import Loader from "../../components/layout/Loader";
 
 
 const UserProfile = () => {
-	const { isAuthenticated, isLoading, user } = useSelector((state) => state.user);
+	const { isLoading, user } = useSelector((state) => state.user);
 
 	return (
 		<div>
@@ -17,7 +17,7 @@ const UserProfile = () => {
 					<div>
 						<div>
 							<figure>
-								<img src={user.user?.avatar} alt={user.user?.name} />
+								<img src={user.user?.avatar.url} alt={user.user?.name} />
 							</figure>
 							<Link to="/me/update">Edit Profile</Link>
 						</div>

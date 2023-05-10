@@ -20,6 +20,7 @@ import { loadUser } from "./features/UserSlice";
 import { store } from "./store";
 import UserProfile from "./containers/User/UserProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UserUpdateProfile from "./containers/User/UserUpdateProfile";
 
 function App() {
   useEffect(() => {
@@ -38,8 +39,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/me" element={<UserProfile />} />
+            <Route path="/me" element={<UserProfile />} exact />
           </Route>
+          <Route path="/me/update" element={<UserUpdateProfile />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/notfound" replace />} />
