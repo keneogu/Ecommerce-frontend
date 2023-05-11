@@ -102,10 +102,6 @@ export const forgotPassword = createAsyncThunk("user/updatePassword",
 		}
 		
 		const { data } =	await axios.post('/api/v1/password/forgot', email, config)
-
-		if(data) {
-			localStorage.setItem('user', JSON.stringify(data))
-		}
 		return data.message
 	}
 )
