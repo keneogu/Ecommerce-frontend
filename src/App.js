@@ -21,6 +21,8 @@ import { store } from "./store";
 import UserProfile from "./containers/User/UserProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UserUpdateProfile from "./containers/User/UserUpdateProfile";
+import UserUpdatePassword from "./containers/User/UserUpdatePassword";
+import ForgotPassword from "./containers/User/ForgotPassword";
 
 function App() {
   useEffect(() => {
@@ -42,6 +44,8 @@ function App() {
             <Route path="/me" element={<UserProfile />} exact />
           </Route>
           <Route path="/me/update" element={<UserUpdateProfile />} />
+          <Route path="/me/password/update" element={<UserUpdatePassword />} />
+          <Route path="/me/password/forgot" element={<ForgotPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/notfound" replace />} />
