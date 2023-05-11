@@ -93,6 +93,23 @@ export const updateUserPassword = createAsyncThunk("user/updatePassword",
 	}
 )
 
+export const forgotPassword = createAsyncThunk("user/updatePassword", 
+	async (email) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		
+		const { data } =	await axios.post('/api/v1/password/forgot', email, config)
+
+		if(data) {
+			localStorage.setItem('user', JSON.stringify(data))
+		}
+		return data.message
+	}
+)
+
 const UserSlice = createSlice({
 	name: "user",
 	initialState,
@@ -154,6 +171,11 @@ const UserSlice = createSlice({
 			state.isLoading = false
 			state.isAuthenticated = true
 			state.isUpdated = action.payload
+		},
+		[updateUserPassword.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = true
+			state.message = action.payload
 		},
 	}
 })
