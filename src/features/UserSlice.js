@@ -76,6 +76,23 @@ export const updateUserProfile = createAsyncThunk("user/updatePassword",
 	}
 )
 
+export const updateUserPassword = createAsyncThunk("user/updatePassword", 
+	async (passwords) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		
+		const { data } =	await axios.put('/api/v1/password/update', passwords, config)
+
+		if(data) {
+			localStorage.setItem('user', JSON.stringify(data))
+		}
+		return data.success
+	}
+)
+
 const UserSlice = createSlice({
 	name: "user",
 	initialState,
@@ -129,6 +146,11 @@ const UserSlice = createSlice({
 			state.user = null
 		},
 		[updateUserProfile.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = true
+			state.isUpdated = action.payload
+		},
+		[updateUserPassword.fulfilled]: (state, action) => {
 			state.isLoading = false
 			state.isAuthenticated = true
 			state.isUpdated = action.payload
