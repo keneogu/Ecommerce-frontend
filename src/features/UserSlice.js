@@ -59,7 +59,7 @@ export const loadUser = createAsyncThunk("user/loadUser",
 		return response?.data
 })
 
-export const updateUserProfile = createAsyncThunk("user/updatePassword", 
+export const updateUserProfile = createAsyncThunk("user/updateUserProfile", 
 	async (userData) => {
 		const config = {
 			headers: {
@@ -93,7 +93,7 @@ export const updateUserPassword = createAsyncThunk("user/updatePassword",
 	}
 )
 
-export const forgotPassword = createAsyncThunk("user/updatePassword", 
+export const forgotPassword = createAsyncThunk("user/forgotPassword", 
 	async (email) => {
 		const config = {
 			headers: {
@@ -103,6 +103,20 @@ export const forgotPassword = createAsyncThunk("user/updatePassword",
 		
 		const { data } =	await axios.post('/api/v1/password/forgot', email, config)
 		return data.message
+	}
+)
+
+export const resetPassword = createAsyncThunk("user/resetPassword", 
+	async (features) => {
+		const {token, passwords} = features
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		
+		const { data } =	await axios.put(`/api/v1/password/reset/${token}`, passwords, config)
+		return data.success
 	}
 )
 
@@ -172,6 +186,11 @@ const UserSlice = createSlice({
 			state.isLoading = false
 			state.isAuthenticated = true
 			state.message = action.payload
+		},
+		[resetPassword.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.isAuthenticated = true
+			state.success = action.payload
 		},
 	}
 })
