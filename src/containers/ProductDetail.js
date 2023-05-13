@@ -37,6 +37,13 @@ const ProductDetail = () => {
 		setQuantity(qty)
 	}
 
+	const handleDecrease = () => {
+		const count = document.querySelector('.count')
+		if(count.valueAsNumber <= 1) return;
+		const qty = count.valueAsNumber - 1
+		setQuantity(qty)
+	}
+
 	useEffect(() => {
 		dispatch(fetchProductDetails(id));
 	}, [dispatch, id])
