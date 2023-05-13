@@ -12,6 +12,7 @@ const ProductDetail = () => {
 	const dispatch = useDispatch();
 
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [quantity, setQuantity] = useState(1)
 
 	const prevSlide = () => {
 		const isFirstSlide = currentIndex === 0;
@@ -28,6 +29,13 @@ const ProductDetail = () => {
 	const goToSlide = (slideIndex) => {
 		setCurrentIndex(slideIndex);
 	};
+
+	const handleIncrease = () => {
+		const count = document.querySelector('.count')
+		if(count.valueAsNumber >= product.stock) return;
+		const qty = count.valueAsNumber + 1
+		setQuantity(qty)
+	}
 
 	useEffect(() => {
 		dispatch(fetchProductDetails(id));
@@ -80,9 +88,9 @@ const ProductDetail = () => {
 
 							<p>{product.price}$</p>
 							<div>
-								<span>-</span>
-								<input type="number" value="1" readOnly />
-								<span>+</span>
+								<span onClick={handleDecrease}>-</span>
+								<input type="number" className='count' value={quantity} readOnly />
+								<span onClick={handleIncrease}>+</span>
 							</div>
 							<button>Add to Cart</button>
 							<hr />

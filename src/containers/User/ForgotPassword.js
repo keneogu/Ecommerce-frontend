@@ -13,7 +13,7 @@ const ForgotPassword = () => {
     if (message) {
       alert(message);
     }
-  }, [dispatch, alert]);
+  }, [dispatch, message]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

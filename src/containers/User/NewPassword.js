@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { resetPassword } from "../../features/UserSlice";
 import Head from "../../components/layout/Head";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 const NewPassword = () => {
+  const {token} = useParams();
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-  const { success } = useSelector((state) => state.user);
+  const { success, isLoading } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -16,7 +17,7 @@ const NewPassword = () => {
       alert("Password updated successfully");
 			Navigate('/login')
     }
-  }, [dispatch, success, Navigate]);
+  }, [dispatch, success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
