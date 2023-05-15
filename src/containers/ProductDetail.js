@@ -9,7 +9,7 @@ import { addToCart } from '../features/CartSlice';
 
 const ProductDetail = () => {
 	const { id } = useParams();
-	const product = useSelector(getSelectedProduct)
+	const product = useSelector(getSelectedProduct);
 	const dispatch = useDispatch();
 
 	const [currentIndex, setCurrentIndex] = useState(0);
