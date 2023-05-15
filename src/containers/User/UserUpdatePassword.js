@@ -63,4 +63,4 @@ const UserUpdatePassword = () => {
 	)
 }
 
-export default UserUpdatePassword
+export default UserUpdatePassword;

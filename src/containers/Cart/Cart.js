@@ -49,7 +49,7 @@ const Cart = () => {
 					</div>
 					<div className="cart-items">
 						{cart.cartItems?.map(cartItem => (
-							<div className="cart-item" key={cartItem.id}>
+							<div className="cart-item" key={cartItem._id}>
 								<div className="cart-product">
 									<img src={cartItem.image} alt={cartItem.name} />
 									<div>

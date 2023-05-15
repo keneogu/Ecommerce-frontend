@@ -5,6 +5,7 @@ import Loader from '../components/layout/Loader';
 import { fetchProductDetails, getSelectedProduct } from '../features/ProductSlice';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
+import { addToCart } from '../features/CartSlice';
 
 const ProductDetail = () => {
 	const { id } = useParams();
@@ -42,6 +43,10 @@ const ProductDetail = () => {
 		if(count.valueAsNumber <= 1) return;
 		const qty = count.valueAsNumber - 1
 		setQuantity(qty)
+	}
+
+	const handleAddToCart = (id) => {
+		dispatch(addToCart(id))
 	}
 
 	useEffect(() => {
@@ -95,11 +100,11 @@ const ProductDetail = () => {
 
 							<p>{product.price}$</p>
 							<div>
-								<span onClick={handleDecrease}>-</span>
+								<span onClick={handleDecrease} className='cursor-pointer'>-</span>
 								<input type="number" className='count' value={quantity} readOnly />
-								<span onClick={handleIncrease}>+</span>
+								<span disabled={product.stock === 1} onClick={handleIncrease} className={product.stock === 1  || 0 ? 'text-gray-400 cursor-pointer' : 'text-inherit'}>+</span>
 							</div>
-							<button>Add to Cart</button>
+							<button disabled={product.stock === 0} onClick={() => handleAddToCart(product)}>Add to Cart</button>
 							<hr />
 
 							<p>Status: <span className={product.stock > 0 ? "text-green-500" : "text-red-500"} > {product.stock > 0 ? 'In Stock' : 'Out of stock'}</span></p>
