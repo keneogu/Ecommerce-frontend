@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getTotals, removeCart, decreaseCart, clearCart, addToCart } from "../../features/CartSlice";
 
 const Cart = () => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const cart = useSelector((state) => state.cart);
+	const navigate = useNavigate();
+
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -26,6 +28,10 @@ const Cart = () => {
 
 	const handleClearCart = () => {
 		dispatch(clearCart())
+	}
+
+	const handleCheckout = () => {
+		navigate("/login?redirect=/shipping")
 	}
 
 	return (
@@ -80,7 +86,7 @@ const Cart = () => {
 								<span className="amount">${cart.cartTotalAmount}</span>
 							</div>
 							<p>Taxes and shipping calculated at checkout</p>
-							<button>Check out</button>
+							<button onClick={handleCheckout}>Check out</button>
 						</div>
 					</div>
 				</div>)
