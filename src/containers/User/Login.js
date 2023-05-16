@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginUser } from "../../features/UserSlice";
 import Head from "../../components/layout/Head";
 import Loader from "../../components/layout/Loader";
@@ -24,12 +24,15 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const redirect = location.search ? location.search.split('=')[1] : '/'
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate(redirect);
     }
-  }, [dispatch, isAuthenticated, navigate]);
+  }, [dispatch, isAuthenticated, navigate, redirect]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
