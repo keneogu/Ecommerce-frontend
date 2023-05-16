@@ -7,6 +7,9 @@ const initialState = {
     : [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
+  shippingInfo: localStorage.getItem("shippingInfo")
+  ? JSON.parse(localStorage.getItem("shippingInfo"))
+  : {},
 };
 
 const cartSlice = createSlice({
@@ -89,9 +92,18 @@ const cartSlice = createSlice({
       );
 			state.cartTotalQuantity = quantity;
 			state.cartTotalAmount = total
-    }, 
+    },
+    getShippingInfo(state, action) {
+      const shippingInfo = action.payload;
+      state.shippingInfo = shippingInfo;
+      localStorage.setItem("shippingInfo", JSON.stringify(state.shippingInfo));
+
+      toast.error('Product shipped', {
+        position: "bottom-left",
+      });
+    },
   },
 });
 
-export const { addToCart, removeCart, decreaseCart, clearCart, getTotals } = cartSlice.actions;
+export const { addToCart, removeCart, decreaseCart, clearCart, getTotals, getShippingInfo } = cartSlice.actions;
 export default cartSlice.reducer;
