@@ -25,6 +25,7 @@ import UserUpdatePassword from "./containers/User/UserUpdatePassword";
 import ForgotPassword from "./containers/User/ForgotPassword";
 import NewPassword from "./containers/User/NewPassword";
 import Shipping from "./containers/Cart/Shipping";
+import ConfirmOrder from "./containers/Cart/ConfirmOrder";
 
 function App() {
   useEffect(() => {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/me/password/reset/:token" element={<NewPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/shipping" element={<Shipping />} />
+          <Route path="/order/confirm" element={<ConfirmOrder />} />
           <Route path="/notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/notfound" replace />} />
         </Routes>
