@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { countries } from "countries-list";
 import Head from "../../components/layout/Head";
 import { getShippingInfo } from "../../features/CartSlice";
+import Checkout from './Checkout';
 
 const Shipping = () => {
 	const {shippingInfo} = useSelector(state => state.cart);
@@ -22,12 +23,13 @@ const Shipping = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		dispatch(getShippingInfo({address, city, postalCode, phoneNo, country}))
-		navigate("/confirm")
+		navigate("/order/confirm")
 	}
 
 	return (
 		<div>
 			 <Head title={"Shipping Info"} />
+			 <Checkout shipping />
 			<div>
 				<form onSubmit={handleSubmit}>
 					<h1>Shipping Info</h1>
