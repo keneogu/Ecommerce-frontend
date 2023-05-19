@@ -71,16 +71,7 @@ const Navbar = () => {
                 <div className="truncate">{user && user.user?.email}</div>
               </div>
               <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                {user && user.user?.role !== "admin" ? (
-                  <li>
-                    <Link
-                      to="/order/me"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      Orders
-                    </Link>
-                  </li>
-                ) : (
+                {user && user.user?.role === "admin"  && (
                   <li>
                     <Link
                       to="/dashboard"
@@ -90,6 +81,14 @@ const Navbar = () => {
                     </Link>
                   </li>
                 )}
+                <li>
+                    <Link
+                      to="/orders/me"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Orders
+                    </Link>
+                  </li>
                 <li>
                   <Link
                     to="/me"
