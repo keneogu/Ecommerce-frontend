@@ -17,17 +17,19 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
+      const prod = action.payload
       const itemIndex = state.cartItems.findIndex(
-        (item) => item._id === action.payload._id
+        (item) => item._id === prod._id
       );
       if (itemIndex >= 0) {
-        state.cartItems[itemIndex].cartQuantity += 1;
+        state.cartItems[itemIndex].quantity += 1;
         toast.info("increased product quantity", {
           position: "bottom-left",
         });
       } else {
-        const tempProduct = { ...action.payload, cartQuantity: 1 };
-        state.cartItems.push(tempProduct);
+        const mainProduct = { ...prod, image: prod.images[0].url, product: prod._id, quantity: 1 };
+
+        state.cartItems.push(mainProduct);
         toast.success("new product added to cart", {
           position: "bottom-left",
         });
@@ -50,14 +52,14 @@ const cartSlice = createSlice({
       const itemIndex = state.cartItems.findIndex(
         (cartItem) => cartItem._id === action.payload._id
       );
-      if (state.cartItems[itemIndex].cartQuantity > 1) {
-        state.cartItems[itemIndex].cartQuantity -= 1;
+      if (state.cartItems[itemIndex].quantity > 1) {
+        state.cartItems[itemIndex].quantity -= 1;
         toast.info(`Decreased ${action.payload.name} cart quantity`, {
           position: "bottom-left",
         });
-      } else if (state.cartItems[itemIndex].cartQuantity === 1) {
+      } else if (state.cartItems[itemIndex].quantity === 1) {
         const cartItems = state.cartItems.filter(
-          (item) => item._id !== action.payload._id
+          (item) => item.product !== action.payload.product
         );
         state.cartItems = cartItems;
         localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -76,21 +78,21 @@ const cartSlice = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     getTotals(state, action) {
-      let { total, quantity } = state.cartItems.reduce(
+      let { total, quantities } = state.cartItems.reduce(
         (cartTotal, cartItem) => {
-          const { price, cartQuantity } = cartItem;
-          const itemTotal = price * cartQuantity;
+          const { price, quantity } = cartItem;
+          const itemTotal = price * quantity;
 
           cartTotal.total += itemTotal;
-          cartTotal.quantity += cartQuantity;
+          cartTotal.quantities += quantity;
           return cartTotal;
         },
         {
           total: 0,
-          quantity: 0,
+          quantities: 0,
         }
       );
-			state.cartTotalQuantity = quantity;
+			state.cartTotalQuantity = quantities;
 			state.cartTotalAmount = total
     },
     getShippingInfo(state, action) {
