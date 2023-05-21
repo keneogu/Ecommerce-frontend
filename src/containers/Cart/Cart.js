@@ -61,19 +61,19 @@ const Cart = () => {
 								<div className="cart-product">
 									<img src={cartItem.image} alt={cartItem.name} />
 									<div>
-										<Link to={`/product/${cartItem._id}`}>{cartItem.name}</Link>
+										<Link to={`/product/${cartItem.product}`}>{cartItem.name}</Link>
 										<p>{cartItem.desc}</p>
 										<button onClick={() => handleRemoveCart(cartItem)}>Remove</button>
 									</div>
 								</div>
 								<div className="cart-product-price">${cartItem.price}</div>
 								<div className="cart-product-quantity">
-									<button disabled={cartItem.cartQuantity === 1} onClick={() => handleDecreaseCart(cartItem)} className={cartItem.cartQuantity === 1 ? 'text-gray-400' : 'text-inherit'}>-</button>
-									<div className="count">{cartItem.cartQuantity}</div>
-									<button disabled={cartItem.stock === cartItem.cartQuantity} onClick={() => handleAddToCart(cartItem)} className={cartItem.stock === cartItem.cartQuantity ? 'text-gray-400' : 'text-inherit'}>+</button>
+									<button disabled={cartItem.quantity === 1} onClick={() => handleDecreaseCart(cartItem)} className={cartItem.quantity === 1 ? 'text-gray-400' : 'text-inherit'}>-</button>
+									<div className="count">{cartItem.quantity}</div>
+									<button disabled={cartItem.stock === cartItem.quantity} onClick={() => handleAddToCart(cartItem)} className={cartItem.stock === cartItem.quantity ? 'text-gray-400' : 'text-inherit'}>+</button>
 								</div>
 								<div className="cart-product-total-price">
-									${cartItem.price * cartItem.cartQuantity}
+									${cartItem.price * cartItem.quantity}
 								</div>
 							</div>
 						))}
