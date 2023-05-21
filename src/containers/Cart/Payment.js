@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Head from "../../components/layout/Head";
 import Checkout from "./Checkout";
 import {
@@ -11,6 +11,7 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+import { createOrder } from "../../features/OrderSlice";
 
 const options = {
   style: {
@@ -28,9 +29,21 @@ const Payment = () => {
   const elements = useElements();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { cartitems, shippingInfo } = useSelector((state) => state.cart);
+  const { cartItems, shippingInfo } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+
+  const order = {
+    orderedItems: cartItems,
+    shippingInfo
+  }
 
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+  if(orderInfo) {
+    order.itemsPrice = orderInfo.itemsPrice
+    order.shippingPrice = orderInfo.shippingPrice
+    order.taxPrice = orderInfo.taxPrice
+    order.totalPrice = orderInfo.totalPrice
+  }
 
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
@@ -72,6 +85,14 @@ const Payment = () => {
         document.querySelector("#payment_btn").disabled = false;
       } else {
         if (result.paymentIntent.status === "succeeded") {
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status
+          }
+          dispatch(createOrder(order))
+          navigate('/success')
+        }else {
+          alert("'There is some issue while payment processing...")
         }
       }
     } catch (error) {
@@ -80,7 +101,6 @@ const Payment = () => {
     }
   };
 
-  useEffect(() => {}, []);
   return (
     <div>
       <Head title={"Payment Page"} />
@@ -93,14 +113,14 @@ const Payment = () => {
             <CardNumberElement type="text" id="card_num" options={options} />
           </div>
           <div>
-            <label htmlFor="card_exp">Card Number</label>
+            <label htmlFor="card_exp">Card Expiry Date</label>
             <CardExpiryElement type="text" id="card_exp" options={options} />
           </div>
           <div>
-            <label htmlFor="card_cvc">Card Number</label>
+            <label htmlFor="card_cvc">Card CvC Number</label>
             <CardCvcElement type="text" id="card_cvc" options={options} />
           </div>
-          <button type="submit" id="payment_btn">
+          <button type="submit" id="payment_btn" className="bg-orange-700">
             Pay
           </button>
         </form>
