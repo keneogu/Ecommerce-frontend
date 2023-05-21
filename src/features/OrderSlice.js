@@ -1,6 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const createOrder = createAsyncThunk("orders/createOrder", 
+	async (cart) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		
+		const { data } =	await axios.post('/api/v1/order/new', cart, config)
+		return data
+	}
+)
+
 export const myOrders = createAsyncThunk(
 	"orders/myOrders",
 	async () => {
@@ -16,11 +29,24 @@ const initialState = {
 	isLoading: true
 };
 
-const orderSlice = createSlice({
+const OrderSlice = createSlice({
 	name: 'orders',
 	initialState,
 	reducers: {},
 	extraReducers: {
+		[createOrder.pending]: (state, action) => {
+			state.status = 'pending'
+			state.isLoading = true
+		},
+		[createOrder.fulfilled]: (state, action) => {
+			state.status = "success"
+			state.isLoading = false
+			state.orders = action.payload
+		},
+		[createOrder.rejected]: (state, action) => {
+			state.status = "rejected"
+			state.isLoading = false
+		},
 		[myOrders.pending]: (state, action) => {
 			state.status = 'pending'
 			state.isLoading = true
@@ -37,4 +63,4 @@ const orderSlice = createSlice({
 	}
 })
 
-export default orderSlice.reducer;
+export default OrderSlice.reducer;
