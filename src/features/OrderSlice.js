@@ -1,7 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const createOrder = createAsyncThunk("orders/createOrder", 
+const initialState = {
+	orders: {},
+	order: [],
+	status: null,
+	isLoading: true
+};
+
+export const createOrder = createAsyncThunk("order/createOrder", 
 	async (cart) => {
 		const config = {
 			headers: {
@@ -15,22 +22,17 @@ export const createOrder = createAsyncThunk("orders/createOrder",
 )
 
 export const myOrders = createAsyncThunk(
-	"orders/myOrders",
+	"order/myOrders",
 	async () => {
-		const { data } =	await axios.get('/api/v1/orders/me')
+		const {data} =	await axios.get('/api/v1/orders/me')
 
-		return data?.cart
+		return data
+		// console.log(data)
 	}
 )
 
-const initialState = {
-  orders: [],
-	status: null,
-	isLoading: true
-};
-
 const OrderSlice = createSlice({
-	name: 'orders',
+	name: "orders",
 	initialState,
 	reducers: {},
 	extraReducers: {
@@ -41,7 +43,7 @@ const OrderSlice = createSlice({
 		[createOrder.fulfilled]: (state, action) => {
 			state.status = "success"
 			state.isLoading = false
-			state.orders = action.payload
+			state.orders = action.payload.cart
 		},
 		[createOrder.rejected]: (state, action) => {
 			state.status = "rejected"
@@ -52,9 +54,9 @@ const OrderSlice = createSlice({
 			state.isLoading = true
 		},
 		[myOrders.fulfilled]: (state, action) => {
-			state.status = "success"
+			state.status = action.payload.status
 			state.isLoading = false
-			state.orders = action.payload
+			state.order = action.payload
 		},
 		[myOrders.rejected]: (state, action) => {
 			state.status = "rejected"

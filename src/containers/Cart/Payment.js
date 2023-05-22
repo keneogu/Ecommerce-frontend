@@ -55,7 +55,6 @@ const Payment = () => {
 
     let res;
 
-    try {
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -95,10 +94,6 @@ const Payment = () => {
           alert("'There is some issue while payment processing...")
         }
       }
-    } catch (error) {
-      document.querySelector("#payment_btn").disabled = false;
-      alert(error.response.data.message);
-    }
   };
 
   return (

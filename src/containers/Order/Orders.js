@@ -8,12 +8,12 @@ import Head from '../../components/layout/Head';
 import { FaEye } from 'react-icons/fa';
 
 const Orders = () => {
-	const { orders } = useSelector(state => state.order);
+	const { order } = useSelector(state => state.order);
 	const { isLoading } = useSelector(state => state.order)
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if(orders.cart.length >= 0) {
+		if(order.cart > 0) {
 			dispatch(myOrders())
 		}
 	}, [dispatch])
@@ -49,7 +49,7 @@ const Orders = () => {
 			],
 			rows: []
 		}
-			orders.cart?.forEach(order => {
+			order.cart?.forEach(order => {
 				data.rows.push({
 					id: order._id,
 					numOfItems: order.orderedItems.length,
