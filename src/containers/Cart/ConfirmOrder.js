@@ -52,24 +52,22 @@ const ConfirmOrder = () => {
           <h4>Your Cart Items</h4>
           <hr />
           {cartItems.map((item) => (
-            <>
-              <div>
-                <div key={item._id}>
+              <div key={item._id}>
+                <div>
                   <div>
                     <img src={item.image} alt="item Product" />
                   </div>
                   <div>
-                    <Link to={`/product/${item._id}`}>{item.name}</Link>
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
                   <div>
                     <p>
-                      {item.cartQuantity} * {item.price} ={" "}
-                      <b>${item.cartQuantity * item.price}</b>
+                      {item.quantity} * {item.price} ={" "}
+                      <b>${item.quantity * item.price}</b>
                     </p>
                   </div>
                 </div>
               </div>
-            </>
           ))}
         </div>
         <div>
