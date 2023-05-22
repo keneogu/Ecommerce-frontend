@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MDBDataTable } from 'mdbreact';
 import Loader from '../../components/layout/Loader';
 import { myOrders } from '../../features/OrderSlice';
@@ -8,8 +8,15 @@ import Head from '../../components/layout/Head';
 import { FaEye } from 'react-icons/fa';
 
 const Orders = () => {
-	const { orders, isLoading } = useSelector(state => state.order)
+	const { orders } = useSelector(state => state.order);
+	const { isLoading } = useSelector(state => state.order)
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if(orders.cart.length >= 0) {
+			dispatch(myOrders())
+		}
+	}, [dispatch])
 
 	const setOrders = () => {
 		const data = {
@@ -38,28 +45,23 @@ const Orders = () => {
 					label: 'Actions',
 					field: 'actions',
 					sort: 'asc'
-				}
+				},
 			],
 			rows: []
 		}
-
-		orders.forEach(order => {
-			data.rows.push({
-				id: order._id,
-				numOfItems: order.orderedItems.length,
-				amount: `$${order.totalPrice}`,
-				status: order.orderStatus && String(order.orderStatus).includes('Delivered') ? <p className='text-green'>{order.orderStatus}</p> : <p className='text-red'>{order.orderStatus}</p>,
-				actions: <Link to={`/order/${order._id}`}>
-					<FaEye />
-				</Link>
+			orders.cart?.forEach(order => {
+				data.rows.push({
+					id: order._id,
+					numOfItems: order.orderedItems.length,
+					amount: `$${order.totalPrice}`,
+					status: order.orderStatus && String(order.orderStatus).includes('Delivered') ? <p className='text-green'>{order.orderStatus}</p> : <p className='text-red'>{order.orderStatus}</p>,
+					actions: <Link to={`/order/${order._id}`}>
+						<FaEye />
+					</Link>
+				})
 			})
-		})
 		return data;
 	}
-
-	useEffect(() => {
-		dispatch(myOrders())
-	}, [dispatch])
 	
 	return (
 		<div>
