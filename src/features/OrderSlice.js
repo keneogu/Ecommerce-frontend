@@ -5,7 +5,8 @@ const initialState = {
 	orders: {},
 	order: [],
 	status: null,
-	isLoading: true
+	isLoading: true,
+	orderDetail: {},
 };
 
 export const createOrder = createAsyncThunk("order/createOrder", 
@@ -28,6 +29,16 @@ export const myOrders = createAsyncThunk(
 
 		return data
 		// console.log(data)
+	}
+)
+
+export const fetchOrderDetails = createAsyncThunk(
+	"order/fetchOrderDetails",
+	async (id) => {
+		const {data} =	await axios.get(`/api/v1/order/${id}`)
+
+		return data
+		// console.log(response)
 	}
 )
 
@@ -59,6 +70,19 @@ const OrderSlice = createSlice({
 			state.order = action.payload
 		},
 		[myOrders.rejected]: (state, action) => {
+			state.status = "rejected"
+			state.isLoading = false
+		},
+		[fetchOrderDetails.pending]: (state, action) => {
+			state.status = 'pending'
+			state.isLoading = true
+		},
+		[fetchOrderDetails.fulfilled]: (state, action) => {
+			state.status = "success"
+			state.isLoading = false
+			state.orderDetail = action.payload
+		},
+		[fetchOrderDetails.rejected]: (state, action) => {
 			state.status = "rejected"
 			state.isLoading = false
 		},
