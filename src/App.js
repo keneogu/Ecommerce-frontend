@@ -31,6 +31,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Payment from "./containers/Cart/Payment";
 import Orders from "./containers/Order/Orders";
+import OrderDetails from "./containers/Order/OrderDetails";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -67,6 +68,7 @@ function App() {
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/order/confirm" element={<ConfirmOrder />} />
           <Route path="/orders/me" element={<Orders />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
           {stripeApiKey && (
             <Route
               path="/payment"

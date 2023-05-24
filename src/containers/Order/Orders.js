@@ -8,15 +8,15 @@ import Head from '../../components/layout/Head';
 import { FaEye } from 'react-icons/fa';
 
 const Orders = () => {
-	const { order } = useSelector(state => state.order);
-	const { isLoading } = useSelector(state => state.order)
+	const { isLoading, order } = useSelector(state => state.order)
+	
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if(order.cart > 0) {
 			dispatch(myOrders())
 		}
-	}, [dispatch])
+	}, [dispatch, order.cart])
 
 	const setOrders = () => {
 		const data = {
