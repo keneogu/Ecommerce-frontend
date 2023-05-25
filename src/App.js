@@ -32,6 +32,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import Payment from "./containers/Cart/Payment";
 import Orders from "./containers/Order/Orders";
 import OrderDetails from "./containers/Order/OrderDetails";
+import Layout from "./admin/shared/Layout";
+import Dashboard from "./admin/Dashboard";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -59,26 +61,32 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/me" element={<UserProfile />} exact />
-          </Route>
-          <Route path="/me/update" element={<UserUpdateProfile />} />
-          <Route path="/me/password/update" element={<UserUpdatePassword />} />
-          <Route path="/me/password/forgot" element={<ForgotPassword />} />
-          <Route path="/me/password/reset/:token" element={<NewPassword />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/shipping" element={<Shipping />} />
-          <Route path="/order/confirm" element={<ConfirmOrder />} />
-          <Route path="/orders/me" element={<Orders />} />
-          <Route path="/order/:id" element={<OrderDetails />} />
-          {stripeApiKey && (
+            <Route path="/me/update" element={<UserUpdateProfile />} />
             <Route
-              path="/payment"
-              element={
-                <Elements stripe={loadStripe(stripeApiKey)}>
-                  <Payment />
-                </Elements>
-              }
+              path="/me/password/update"
+              element={<UserUpdatePassword />}
             />
-          )}
+            <Route path="/me/password/forgot" element={<ForgotPassword />} />
+            <Route path="/me/password/reset/:token" element={<NewPassword />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/order/confirm" element={<ConfirmOrder />} />
+            <Route path="/orders/me" element={<Orders />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
+            {stripeApiKey && (
+              <Route
+                path="/payment"
+                element={
+                  <Elements stripe={loadStripe(stripeApiKey)}>
+                    <Payment />
+                  </Elements>
+                }
+              />
+            )}
+            <Route path="/admin" element={<Layout />}>
+              <Route index element={<Dashboard />} />
+            </Route>
+          </Route>
           <Route path="/notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/notfound" replace />} />
         </Routes>
