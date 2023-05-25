@@ -74,7 +74,7 @@ const Navbar = () => {
                 {user && user.user?.role === "admin"  && (
                   <li>
                     <Link
-                      to="/dashboard"
+                      to="/admin"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Dashboard
