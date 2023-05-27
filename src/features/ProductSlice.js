@@ -30,6 +30,20 @@ export const fetchProductDetails = createAsyncThunk(
 	}
 )
 
+export const review = createAsyncThunk(
+	"products/review",
+	async(reviewData) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		
+		const { data } =	await axios.put('/api/v1/review', reviewData, config)
+		return data.success
+	}
+)
+
 const ProductSlice = createSlice({
 	name: "products",
 	initialState,
@@ -55,7 +69,12 @@ const ProductSlice = createSlice({
 		[fetchProductDetails.fulfilled]: (state, action) => {
 			state.status = "success";
 			state.isLoading = false;
-			state.productDetail = action.payload
+			state.productDetail = action.payload;
+		},
+		[review.fulfilled]: (state = {}, action) => {
+			state.status = "success";
+			state.isLoading = false;
+			state.success = action.payload;
 		},
 	}
 });
