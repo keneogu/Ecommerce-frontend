@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { FaTachometerAlt, FaShoppingBasket, FaUserAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaTachometerAlt, FaShoppingBasket, FaUserAlt, FaCommentAlt, FaTruck } from "react-icons/fa";
 
 const Sidebar = () => {
 	const [open, setOpen] = useState(false);
@@ -13,8 +14,8 @@ const Sidebar = () => {
 							Dashboard
 						</Link>
 					</li>
-					<li>	
-						<label tabIndex={0} onClick={() => setOpen(!open)} className="btn m-1">Click</label>
+					<li>
+						<p onClick={() => setOpen(!open)} className="btn m-1"><FaTruck />Product</p>
 						<ul tabIndex={0} className={open ? "block" : "hidden"}>
 							<li><Link to="/admin/products">All Product</Link></li>
 							<li><Link to="/admin/product">Create Product</Link></li>
@@ -34,7 +35,7 @@ const Sidebar = () => {
 					</li>
 					<li>
 						<Link to="/admin/reviews">
-							<FaUserAlt />
+							<FaCommentAlt />
 							Reviews
 						</Link>
 					</li>
