@@ -83,7 +83,7 @@ function App() {
                 }
               />
             )}
-            <Route path="/admin" element={<Layout />}>
+            <Route path="/admin" isAdmin={true} element={<Layout />}>
               <Route index element={<Dashboard />} />
             </Route>
           </Route>
