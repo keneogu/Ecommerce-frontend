@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom";
 import { FaPencilAlt } from 'react-icons/fa';
@@ -7,6 +7,7 @@ import { fetchAdminProducts } from '../features/ProductSlice';
 import Head from '../components/layout/Head';
 
 const AdminProductsList = () => {
+	const [search, setSearch] = useState("")
 	const { product } = useSelector(state => state.products)
 	const dispatch = useDispatch();
 
@@ -17,6 +18,12 @@ const AdminProductsList = () => {
 	return (
 		<div>
 			<h1>Welcome to the All products page</h1>
+
+			<form>
+				<input type="text" onChange={(e) => setSearch(e.target.value)} placeholder='search products by name'/>
+				<button>search</button>
+			</form>
+
 			<table className="table-auto">
 				<thead>
 					<tr>
@@ -28,7 +35,9 @@ const AdminProductsList = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{product?.map(item => (
+					{product?.filter(item => {
+						return search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search);
+					}).map(item => (
 						<tr key={item._id}>
 							<td>{item._id}</td>
 							<td>{item.name}</td>
