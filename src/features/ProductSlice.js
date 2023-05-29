@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const initialState = {
 	products: [],
-	product: [],
 	status: null,
 	isLoading: true,
 	productDetail: {},
@@ -31,14 +30,6 @@ export const fetchProductDetails = createAsyncThunk(
 	}
 )
 
-export const fetchAdminProducts = createAsyncThunk(
-	"products/fetchAdminProducts",
-	async () => {
-		const { data } =	await axios.get('/api/v1/admin/products')
-		return data.products
-	}
-)
-
 export const review = createAsyncThunk(
 	"products/review",
 	async(reviewData) => {
@@ -59,7 +50,7 @@ const ProductSlice = createSlice({
 	reducers: {
 		searchItems:(state, action) => {
 			state.search = action.payload
-		}
+		},
 	},
 	extraReducers: {
 		[fetchProducts.pending]: (state, action) => {
@@ -72,19 +63,6 @@ const ProductSlice = createSlice({
 			state.products = action.payload
 		},
 		[fetchProducts.rejected]: (state, action) => {
-			state.status = "rejected";
-			state.isLoading = false
-		},
-		[fetchAdminProducts.pending]: (state, action) => {
-			state.status = "pending";
-			state.isLoading = true
-		},
-		[fetchAdminProducts.fulfilled]: (state, action) => {
-			state.status = "success";
-			state.isLoading = false;
-			state.product = action.payload
-		},
-		[fetchAdminProducts.rejected]: (state, action) => {
 			state.status = "rejected";
 			state.isLoading = false
 		},
