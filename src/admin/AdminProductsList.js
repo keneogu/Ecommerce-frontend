@@ -1,58 +1,65 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom";
-import { FaPencilAlt } from 'react-icons/fa';
+import { Link } from "react-router-dom";
+import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import Loader from '../components/layout/Loader';
-import { fetchAdminProducts } from '../features/ProductSlice';
+import { fetchAdminProducts } from '../features/AdminSlice';
 import Head from '../components/layout/Head';
 
 const AdminProductsList = () => {
 	const [search, setSearch] = useState("")
-	const { product } = useSelector(state => state.products)
+	const { products, isLoading } = useSelector(state => state.admin)
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(fetchAdminProducts());
 	}, [dispatch])
 
+
 	return (
 		<div>
-			<h1>Welcome to the All products page</h1>
+			{isLoading ? <Loader /> 
+			: 
+			<>
+			<Head title={'Admin product list page'}/>
+				<h1>Welcome to the All products page</h1>
 
-			<form>
-				<input type="text" onChange={(e) => setSearch(e.target.value)} placeholder='search products by name'/>
-				<button>search</button>
-			</form>
+				<form>
+					<input type="text" onChange={(e) => setSearch(e.target.value)} placeholder='search products by name'/>
+					<button>search</button>
+				</form>
 
-			<table className="table-auto">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Price</th>
-						<th>Stock</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{product?.filter(item => {
-						return search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search);
-					}).map(item => (
-						<tr key={item._id}>
-							<td>{item._id}</td>
-							<td>{item.name}</td>
-							<td>{item.price}</td>
-							<td>{item.stock}</td>
-							<td>
-								<Link to={`/admin/product/${item._id}`} className='py-1 px-2'>
-									<FaPencilAlt />
-								</Link>
-								<button className='p-1 ml-1'>delete</button>
-							</td>
+				<table className="table-auto">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Stock</th>
+							<th>Actions</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{products?.filter(item => {
+							return search.toLowerCase() === '' ? item : item.name.toLowerCase().includes(search);
+						}).map(item => (
+							<tr key={item._id}>
+								<td>{item._id}</td>
+								<td>{item.name}</td>
+								<td>{item.price}</td>
+								<td>{item.stock}</td>
+								<td>
+									<Link to={`/admin/product/${item._id}`} className='py-1 px-2'>
+										<FaPencilAlt />
+									</Link>
+									<button className='p-1 ml-4'><FaTrash /></button>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</>
+			}
 		</div>
 	)
 }
