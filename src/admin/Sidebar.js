@@ -9,14 +9,14 @@ const Sidebar = () => {
 			<nav>
 				<ul>
 					<li>
-						<Link to="/dashboard">
+						<Link to="/admin">
 							<FaTachometerAlt />
 							Dashboard
 						</Link>
 					</li>
 					<li>
 						<p onClick={() => setOpen(!open)} className="btn m-1"><FaTruck />Product</p>
-						<ul tabIndex={0} className={open ? "block" : "hidden"}>
+						<ul className={open ? "block" : "hidden"}>
 							<li><Link to="/admin/products">All Product</Link></li>
 							<li><Link to="/admin/product">Create Product</Link></li>
 						</ul>
