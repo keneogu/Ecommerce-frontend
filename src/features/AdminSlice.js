@@ -5,6 +5,7 @@ const initialState = {
 	products: [],
 	product: {},
 	status: null,
+	success: false,
 	isLoading: true,
 }
 
@@ -25,8 +26,8 @@ export const createProducts = createAsyncThunk(
 			},
 		}
 		
-		const { data } =	await axios.post('/api/v1/admin/products/new', productData, config)
-		return data.product
+		const response =	await axios.post('/api/v1/admin/product/new', productData, config)
+		return response?.data
 	}
 )
 
@@ -53,9 +54,9 @@ const AdminSlice = createSlice({
 			state.isLoading = true
 		},
 		[createProducts.fulfilled]: (state, action) => {
-			state.status = "success";
+			state.success = action.payload.success;
 			state.isLoading = false;
-			state.product = action.payload
+			state.product = action.payload.product;
 		},
 		[createProducts.rejected]: (state, action) => {
 			state.status = "rejected";
@@ -65,3 +66,4 @@ const AdminSlice = createSlice({
 })
 
 export default AdminSlice.reducer;
+
