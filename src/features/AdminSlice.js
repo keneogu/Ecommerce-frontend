@@ -34,7 +34,7 @@ export const createProducts = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
 	"admin/deleteProduct",
 	async (id) => {
-		const {data} =	await axios.post(`/api/v1/admin/product/${id}`)
+		const {data} =	await axios.delete(`/api/v1/admin/product/${id}`)
 		return data.success
 	}
 )
@@ -42,7 +42,12 @@ export const deleteProduct = createAsyncThunk(
 const AdminSlice = createSlice({
 	name: "admin",
 	initialState,
-	reducers: {},
+	reducers: {
+		resetDeletedProduct(state,action) {
+			action.payload = false;
+			state.isDeleted = false
+		},
+	},
 	extraReducers: {
 		[fetchAdminProducts.pending]: (state, action) => {
 			state.status = "pending";
@@ -69,4 +74,5 @@ const AdminSlice = createSlice({
 	}
 })
 
+export const {resetDeletedProduct} = AdminSlice.actions
 export default AdminSlice.reducer;
