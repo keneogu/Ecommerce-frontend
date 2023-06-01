@@ -4,11 +4,11 @@ import Sidebar from '../Sidebar'
 
 const Layout = () => {
 	return (
-		<div className='grid md:grid-cols-6'>
-			<div className='bg-green-500 md:col-span-1'>
+		<div className='grid'>
+			<div className='w-44 bg-green-500 fixed h-screen'>
 				<Sidebar />
 			</div>
-			<div className='bg-red-500 md:col-span-5'>
+			<div className='ml-44'>
 				<div>header</div>
 				<div>{<Outlet />}</div>
 			</div>

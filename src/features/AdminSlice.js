@@ -49,21 +49,12 @@ const AdminSlice = createSlice({
 			state.status = "rejected";
 			state.isLoading = false
 		},
-		[createProducts.pending]: (state, action) => {
-			state.status = "pending";
-			state.isLoading = true
-		},
 		[createProducts.fulfilled]: (state, action) => {
 			state.success = action.payload.success;
 			state.isLoading = false;
 			state.product = action.payload.product;
 		},
-		[createProducts.rejected]: (state, action) => {
-			state.status = "rejected";
-			state.isLoading = false
-		},
 	}
 })
 
 export default AdminSlice.reducer;
-
