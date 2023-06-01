@@ -1,20 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import Loader from '../components/layout/Loader';
-import { fetchAdminProducts } from '../features/AdminSlice';
+import { fetchAdminProducts, deleteProduct, resetDeletedProduct } from '../features/AdminSlice';
 import Head from '../components/layout/Head';
+import { toast } from 'react-toastify';
 
 const AdminProductsList = () => {
 	const [search, setSearch] = useState("")
-	const { products, isLoading } = useSelector(state => state.admin)
+	const { products, isLoading, isDeleted } = useSelector(state => state.admin)
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch(fetchAdminProducts());
-	}, [dispatch])
 
+		if(isDeleted) {
+			navigate("/admin/products");
+			dispatch(fetchAdminProducts());
+			dispatch(resetDeletedProduct())
+			toast.error("Product delete Successfully", {
+				position: "bottom-left",
+			});
+		}
+	}, [dispatch, isDeleted, navigate])
+
+	const handleDelete = (id) => {
+		dispatch(deleteProduct(id))
+	}
 
 	return (
 		<div>
@@ -52,7 +66,7 @@ const AdminProductsList = () => {
 									<Link to={`/admin/product/${item._id}`} className='py-1 px-2'>
 										<FaPencilAlt />
 									</Link>
-									<button className='p-1 ml-4'><FaTrash /></button>
+									<button onClick={() => handleDelete(item._id)} className='p-1 ml-4'><FaTrash /></button>
 								</td>
 							</tr>
 						))}
