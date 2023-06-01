@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createProducts } from "../features/AdminSlice";
@@ -100,10 +100,9 @@ const NewProduct = () => {
         setFormData(() => {
           return {
             name: "",
-            category: "",
-            image: "",
             price: "",
             desc: "",
+            category: "",
             stock: 0,
           };
         });
