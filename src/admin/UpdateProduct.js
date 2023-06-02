@@ -81,6 +81,26 @@ const UpdateProduct = () => {
     });
 	}
 
+  const onChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    setImagesPreview([]);
+    setImages([]);
+    setOldImages([]);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((oldArray) => [...oldArray, reader.result]);
+          setImages((oldArray) => [...oldArray, reader.result]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   return (
     <div>
       <Head title={"Admin Update Product"} />
