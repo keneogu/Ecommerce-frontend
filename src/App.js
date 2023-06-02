@@ -36,6 +36,7 @@ import Layout from "./admin/shared/Layout";
 import Dashboard from "./admin/Dashboard";
 import AdminProductsList from "./admin/AdminProductsList";
 import NewProduct from "./admin/NewProduct";
+import UpdateProduct from "./admin/UpdateProduct";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -89,6 +90,7 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path="/admin/products" element={<AdminProductsList />} />
               <Route path="/admin/product" element={<NewProduct />} />
+              <Route path="/admin/product/:id" element={<UpdateProduct />} />
             </Route>
           </Route>
           <Route path="/notfound" element={<NotFound />} />
