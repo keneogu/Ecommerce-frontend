@@ -61,6 +61,9 @@ const AdminSlice = createSlice({
 			action.payload = false;
 			state.isDeleted = false
 		},
+		resetUpdateProduct(state,action) {
+			state.isUpdated = false;
+		}
 	},
 	extraReducers: {
 		[fetchAdminProducts.pending]: (state, action) => {
@@ -92,5 +95,5 @@ const AdminSlice = createSlice({
 	}
 })
 
-export const {resetDeletedProduct} = AdminSlice.actions
+export const {resetDeletedProduct, resetUpdateProduct} = AdminSlice.actions
 export default AdminSlice.reducer;
