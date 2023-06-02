@@ -39,6 +39,20 @@ export const deleteProduct = createAsyncThunk(
 	}
 )
 
+export const updateProduct = createAsyncThunk(
+	"admin/updateProduct",
+	async (product) => {
+		const { id, productData } = product;
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		const {data} =	await axios.put(`/api/v1/admin/product/${id}`, productData, config)
+		return data.success
+	}
+)
+
 const AdminSlice = createSlice({
 	name: "admin",
 	initialState,
@@ -70,6 +84,10 @@ const AdminSlice = createSlice({
 		[deleteProduct.fulfilled]: (state, action) => {
 			state.isLoading = false;
 			state.isDeleted = action.payload;
+		},
+		[updateProduct.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.isUpdated = action.payload;
 		},
 	}
 })
