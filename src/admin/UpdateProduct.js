@@ -5,7 +5,7 @@ import {
   fetchProductDetails,
   getSelectedProduct,
 } from "../features/ProductSlice";
-import { updateProduct } from "../features/AdminSlice";
+import { resetUpdateProduct, updateProduct } from "../features/AdminSlice";
 import Head from "../components/layout/Head";
 import { toast } from "react-toastify";
 
@@ -45,30 +45,6 @@ const UpdateProduct = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (product && product._id !== id) {
-      dispatch(fetchProductDetails(id));
-    } else {
-      setFormData(() => {
-        return {
-          name: product.name,
-          category: product.category,
-          price: product.price,
-          desc: product.desc,
-          stock: product.stock,
-        };
-      });
-      setOldImages(product.images);
-    }
-
-    if (isUpdated) {
-      navigate("/admin/products");
-      toast.success("Product updated Successfully", {
-        position: "bottom-left",
-      });
-    }
-  }, [dispatch, id, navigate, isUpdated, product]);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -118,9 +94,34 @@ const UpdateProduct = () => {
     for (var pair of data.entries()) {
       console.log(pair[0] + " - " + pair[1]);
     }
-
-    dispatch(updateProduct(product._id, data));
+		
+    dispatch(updateProduct({id: product._id, productData: data}));
   };
+
+	useEffect(() => {
+    if (product && product._id !== id) {
+      dispatch(fetchProductDetails(id));
+    } else {
+      setFormData(() => {
+        return {
+          name: product.name,
+          category: product.category,
+          price: product.price,
+          desc: product.desc,
+          stock: product.stock,
+        };
+      });
+      setOldImages(product.images);
+    }
+
+    if (isUpdated) {
+      navigate("/admin/products");
+      toast.success("Product updated Successfully", {
+        position: "bottom-left",
+      });
+			dispatch(resetUpdateProduct());
+    }
+  }, [dispatch, id, navigate, isUpdated, product]);
 
   return (
     <div>
