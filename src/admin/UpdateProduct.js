@@ -101,6 +101,27 @@ const UpdateProduct = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.set("name", name);
+    data.set("price", price);
+    data.set("desc", desc);
+    data.set("category", category);
+    data.set("stock", stock);
+
+    images.forEach((image) => {
+      data.append("images", image);
+    });
+
+    for (var pair of data.entries()) {
+      console.log(pair[0] + " - " + pair[1]);
+    }
+
+    dispatch(updateProduct(product._id, data));
+  };
+
   return (
     <div>
       <Head title={"Admin Update Product"} />
