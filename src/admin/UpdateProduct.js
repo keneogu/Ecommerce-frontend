@@ -10,6 +10,76 @@ import Head from "../components/layout/Head";
 import { toast } from "react-toastify";
 
 const UpdateProduct = () => {
+  const { id } = useParams();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    desc: "",
+    category: "",
+    stock: 0,
+  });
+
+  const { name, price, desc, category, stock } = formData;
+  const [images, setImages] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
+
+  const categories = [
+    "Electronics",
+    "Accessories",
+    "Beverages",
+    "Food/Fruit",
+    "Fashion",
+    "Cosmetics",
+    "Phones-tablets",
+    "Computing",
+    "Beauty",
+    "Furniture",
+    "Home-appliances",
+    "Sports",
+  ];
+
+  const product = useSelector(getSelectedProduct);
+  const { isUpdated } = useSelector((state) => state.admin);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (product && product._id !== id) {
+      dispatch(fetchProductDetails(id));
+    } else {
+      setFormData(() => {
+        return {
+          name: product.name,
+          category: product.category,
+          price: product.price,
+          desc: product.desc,
+          stock: product.stock,
+        };
+      });
+      setOldImages(product.images);
+    }
+
+    if (isUpdated) {
+      navigate("/admin/products");
+      toast.success("Product updated Successfully", {
+        position: "bottom-left",
+      });
+    }
+  }, [dispatch, id, navigate, isUpdated, product]);
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+
+    setFormData((preve) => {
+      return {
+        ...preve,
+        [name]: value,
+      };
+    });
+	}
 
   return (
     <div>
@@ -29,6 +99,7 @@ const UpdateProduct = () => {
             id="name"
             name="name"
             value={name}
+						onChange={handleChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="please enter your name"
             required
@@ -46,6 +117,7 @@ const UpdateProduct = () => {
             id="price"
             name="price"
             value={price}
+						onChange={handleChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
@@ -62,6 +134,7 @@ const UpdateProduct = () => {
             rows="4"
             name="desc"
             value={desc}
+						onChange={handleChange}
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Leave a comment..."
           ></textarea>
@@ -77,6 +150,7 @@ const UpdateProduct = () => {
             id="category"
             name="category"
             value={category}
+						onChange={handleChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             {categories.map((category) => (
@@ -98,7 +172,7 @@ const UpdateProduct = () => {
             id="stock"
             name="stock"
             value={stock}
-						onChange={handleOnChange}
+						onChange={handleChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
