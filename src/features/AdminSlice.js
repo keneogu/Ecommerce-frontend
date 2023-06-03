@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const initialState = {
 	products: [],
+	orders: [],
+	totalAmount: 0,
 	product: {},
 	status: null,
 	success: false,
@@ -53,6 +55,14 @@ export const updateProduct = createAsyncThunk(
 	}
 )
 
+export const adminFetchOrders = createAsyncThunk(
+	"admin/fetchAdminProducts",
+	async () => {
+		const { data } =	await axios.get('/api/v1/admin/orders')
+		return data
+	}
+)
+
 const AdminSlice = createSlice({
 	name: "admin",
 	initialState,
@@ -76,6 +86,20 @@ const AdminSlice = createSlice({
 			state.products = action.payload
 		},
 		[fetchAdminProducts.rejected]: (state, action) => {
+			state.status = "rejected";
+			state.isLoading = false
+		},
+		[adminFetchOrders.pending]: (state, action) => {
+			state.status = "pending";
+			state.isLoading = true
+		},
+		[adminFetchOrders.fulfilled]: (state, action) => {
+			state.success = action.payload.success;
+			state.isLoading = false;
+			state.totalAmount = action.payload.totalAmount;
+			state.orders = action.payload.carts;
+		},
+		[adminFetchOrders.rejected]: (state, action) => {
 			state.status = "rejected";
 			state.isLoading = false
 		},
