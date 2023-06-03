@@ -8,6 +8,11 @@ import Head from '../components/layout/Head';
 
 const OrderList = () => {
 	const { orders, isLoading } = useSelector(state => state.admin)
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(adminFetchOrders())
+	},[dispatch])
 
 	return (
 		<div>
