@@ -56,7 +56,7 @@ export const updateProduct = createAsyncThunk(
 )
 
 export const adminFetchOrders = createAsyncThunk(
-	"admin/fetchAdminProducts",
+	"admin/fetchAdminOrders",
 	async () => {
 		const { data } =	await axios.get('/api/v1/admin/orders')
 		return data
