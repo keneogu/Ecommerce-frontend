@@ -63,6 +63,15 @@ export const adminFetchOrders = createAsyncThunk(
 	}
 )
 
+export const deleteOrder = createAsyncThunk(
+	"admin/deleteOrder",
+	async (id) => {
+		const {data} =	await axios.delete(`/api/v1/admin/order/${id}`)
+		return data.success
+	}
+)
+
+
 const AdminSlice = createSlice({
 	name: "admin",
 	initialState,
@@ -73,6 +82,9 @@ const AdminSlice = createSlice({
 		},
 		resetUpdateProduct(state,action) {
 			state.isUpdated = false;
+		},
+		resetDeletedOrder(state,action) {
+			state.isOrderDeleted = false;
 		}
 	},
 	extraReducers: {
@@ -116,8 +128,12 @@ const AdminSlice = createSlice({
 			state.isLoading = false;
 			state.isUpdated = action.payload;
 		},
+		[deleteOrder.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.isOrderDeleted = action.payload;
+		},
 	}
 })
 
-export const {resetDeletedProduct, resetUpdateProduct} = AdminSlice.actions
+export const {resetDeletedProduct, resetUpdateProduct, resetDeletedOrder} = AdminSlice.actions
 export default AdminSlice.reducer;
