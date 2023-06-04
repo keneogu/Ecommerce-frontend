@@ -71,6 +71,14 @@ export const deleteOrder = createAsyncThunk(
 	}
 )
 
+export const fetchUsers = createAsyncThunk(
+	"admin/fetchUsers",
+	async () => {
+		const { data } =	await axios.get('/api/v1/admin/users')
+		console.log(data)
+	}
+)
+
 
 const AdminSlice = createSlice({
 	name: "admin",
