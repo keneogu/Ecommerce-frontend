@@ -1,18 +1,33 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import Loader from '../components/layout/Loader';
-import { adminFetchOrders } from '../features/AdminSlice';
+import { adminFetchOrders, deleteOrder, resetDeletedOrder } from '../features/AdminSlice';
 import Head from '../components/layout/Head';
+import { toast } from 'react-toastify';
 
 const OrderList = () => {
-	const { orders, isLoading } = useSelector(state => state.admin)
+	const { orders, isLoading, isOrderDeleted } = useSelector(state => state.admin)
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(adminFetchOrders())
-	},[dispatch])
+		dispatch(adminFetchOrders());
+		
+		if(isOrderDeleted) {
+			navigate("/admin/orders");
+			dispatch(adminFetchOrders());
+			dispatch(resetDeletedOrder());
+			toast.error("Order deleted Successfully", {
+				position: "bottom-left",
+			});
+		}
+	},[dispatch, isOrderDeleted, navigate])
+
+	const handleDelete = (id) => {
+		dispatch(deleteOrder(id));
+	}
 
 	return (
 		<div>
@@ -45,7 +60,7 @@ const OrderList = () => {
 									<Link to={`/admin/order/${order._id}`} className='py-1 px-2'>
 										<FaPencilAlt />
 									</Link>
-									<button className='p-1 ml-4'><FaTrash /></button>
+									<button onClick={() => handleDelete(order._id)} className='p-1 ml-4'><FaTrash /></button>
 								</td>
 							</tr>
 						))}
