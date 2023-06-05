@@ -169,7 +169,7 @@ const UserSlice = createSlice({
 		},
 		[logout.fulfilled]: (state, action) => {
 			state.isLoading = false
-			state.isAuthenticated = true
+			state.isAuthenticated = false
 			state.user = null
 		},
 		[updateUserProfile.fulfilled]: (state, action) => {

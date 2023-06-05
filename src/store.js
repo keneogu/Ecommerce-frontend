@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productReducer, { fetchProducts } from "./features/ProductSlice";
+import productReducer from "./features/ProductSlice";
 import userReducer from "./features/UserSlice";
-import orderReducer, {myOrders} from "./features/OrderSlice";
+import orderReducer from "./features/OrderSlice";
 import { productsApi } from './features/ProductApi';
-import cartReducer, { getTotals} from './features/CartSlice';
+import cartReducer from './features/CartSlice';
 import adminReducer from './features/AdminSlice';
 
 export const store = configureStore({
@@ -19,6 +19,6 @@ export const store = configureStore({
     getDefaultMiddleware().concat(productsApi.middleware),
 });
 
-store.dispatch(fetchProducts())
-store.dispatch(getTotals())
-store.dispatch(myOrders())
+// store.dispatch(fetchProducts())
+// store.dispatch(getTotals())
+// store.dispatch(myOrders())
