@@ -1,19 +1,34 @@
 import React,{ useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUsers } from '../features/AdminSlice'
-import { Link } from "react-router-dom";
+import { deleteUser, fetchUsers, resetDeletedUser } from '../features/AdminSlice'
+import { Link, useNavigate } from "react-router-dom";
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import Loader from '../components/layout/Loader'
 import Head from '../components/layout/Head';
+import { toast } from 'react-toastify';
 
 const UsersList = () => {
 	const [search, setSearch] = useState("")
-	const { users, isLoading } = useSelector(state => state.admin)
+	const { users, isLoading, isUserDeleted } = useSelector(state => state.admin)
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch(fetchUsers())
-	},[dispatch])
+
+		if(isUserDeleted) {
+			navigate("/admin/users");
+			dispatch(fetchUsers());
+			dispatch(resetDeletedUser());
+			toast.error("User deleted Successfully", {
+				position: "bottom-left",
+			});
+		}
+	},[dispatch, isUserDeleted, navigate])
+
+	const handleDelete = (id) => {
+		dispatch(deleteUser(id))
+	}
 	return (
 		<div>
 			{isLoading ? <Loader /> 
@@ -46,10 +61,10 @@ const UsersList = () => {
 								<td>{user.email}</td>
 								<td>{user.role}</td>
 								<td>
-									<Link to={`/admin/product/${user._id}`} className='py-1 px-2'>
+									<Link to={`/admin/user/${user._id}`} className='py-1 px-2'>
 										<FaPencilAlt />
 									</Link>
-									<button className='p-1 ml-4'><FaTrash /></button>
+									<button onClick={() => handleDelete(user._id)} className='p-1 ml-4'><FaTrash /></button>
 								</td>
 							</tr>
 						))}
