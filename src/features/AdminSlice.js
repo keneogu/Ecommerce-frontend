@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
+	users: [],
 	products: [],
 	orders: [],
 	totalAmount: 0,
@@ -75,7 +76,7 @@ export const fetchUsers = createAsyncThunk(
 	"admin/fetchUsers",
 	async () => {
 		const { data } =	await axios.get('/api/v1/admin/users')
-		console.log(data)
+		return data
 	}
 )
 
@@ -120,6 +121,19 @@ const AdminSlice = createSlice({
 			state.orders = action.payload.carts;
 		},
 		[adminFetchOrders.rejected]: (state, action) => {
+			state.status = "rejected";
+			state.isLoading = false
+		},
+		[fetchUsers.pending]: (state, action) => {
+			state.status = "pending";
+			state.isLoading = true
+		},
+		[fetchUsers.fulfilled]: (state, action) => {
+			state.success = action.payload.success;
+			state.isLoading = false;
+			state.users = action.payload.users;
+		},
+		[fetchUsers.rejected]: (state, action) => {
 			state.status = "rejected";
 			state.isLoading = false
 		},
