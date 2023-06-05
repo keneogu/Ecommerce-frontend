@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react'
+import React,{ useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUsers } from '../features/AdminSlice'
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import Loader from '../components/layout/Loader'
 import Head from '../components/layout/Head';
 
 const UsersList = () => {
+	const [search, setSearch] = useState("")
 	const { users, isLoading } = useSelector(state => state.admin)
 	const dispatch = useDispatch();
 
@@ -21,6 +22,10 @@ const UsersList = () => {
 			<Head title={'Users list page'}/>
 				<h1>Welcome to the All Users page</h1>
 
+				<form>
+					<input type="text" onChange={(e) => setSearch(e.target.value)} className='border border-secondary rounded-md w-full' placeholder='search Users by name'/>
+				</form>
+
 				<table className="table-auto">
 					<thead>
 						<tr>
@@ -32,7 +37,9 @@ const UsersList = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{users?.map(user => (
+						{users?.filter(user => {
+							return search.toLowerCase() === '' ? user : user.name.toLowerCase().includes(search);
+						}).map(user => (
 							<tr key={user._id}>
 								<td>{user._id}</td>
 								<td>{user.name}</td>
