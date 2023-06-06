@@ -7,6 +7,7 @@ const initialState = {
 	orders: [],
 	totalAmount: 0,
 	product: {},
+	userDetail: {},
 	status: null,
 	success: false,
 	isLoading: true,
@@ -85,6 +86,14 @@ export const deleteUser = createAsyncThunk(
 	async (id) => {
 		const {data} = await axios.delete(`/api/v1/admin/user/${id}`)
 		return data.success
+	}
+)
+
+export const fetchUserDetails = createAsyncThunk(
+	"admin/deleteUser",
+	async (id) => {
+		const {data} = await axios.get(`/api/v1/admin/user/${id}`)
+		return data
 	}
 )
 
@@ -168,8 +177,14 @@ const AdminSlice = createSlice({
 			state.isLoading = false;
 			state.isUserDeleted = action.payload;
 		},
+		[fetchUserDetails.fulfilled]: (state, action) => {
+			state.success = action.payload.success;
+			state.isLoading = false;
+			state.userDetail = action.payload.user;
+		},
 	}
 })
 
 export const {resetDeletedProduct, resetUpdateProduct, resetDeletedOrder, resetDeletedUser} = AdminSlice.actions
+export const getSelectedUser = (state) => state.admin.userDetail;
 export default AdminSlice.reducer;
