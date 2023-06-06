@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchUserDetails, getSelectedUser } from "../features/AdminSlice";
+import { fetchUserDetails, getSelectedUser, resetUpdateUser, updateUser } from "../features/AdminSlice";
 import Head from "../components/layout/Head";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const UpdateUser = () => {
 	const { id } = useParams();
@@ -17,11 +17,34 @@ const UpdateUser = () => {
 
   const { name, email, role } = formData;
 
+	const user = useSelector(getSelectedUser);
+  const { updated } = useSelector((state) => state.admin);
+
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(fetchUserDetails(id))
-	},[dispatch, id])
+		if (user && user._id !== id) {
+      dispatch(fetchUserDetails(id))
+    } else {
+      setFormData(() => {
+        return {
+          name: user.name,
+          email: user.email,
+          role: user.role
+        };
+      });
+    }
+
+		if (updated) {
+      navigate("/admin/users");
+      toast.success("User updated Successfully", {
+        position: "bottom-left",
+      });
+			dispatch(resetUpdateUser());
+    }
+		
+	},[dispatch, id, user, updated, navigate])
 	
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -34,11 +57,26 @@ const UpdateUser = () => {
     });
 	}
 
+	const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.set("name", name);
+    data.set("email", email);
+    data.set("role", role);
+
+    for (var pair of data.entries()) {
+      console.log(pair[0] + " - " + pair[1]);
+    }
+		
+    dispatch(updateUser({id: user._id, userData: data}));
+  };
+
 	return (
 		<div>
 			<Head title={"update User"} />
       <h1>Update User</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h4>Update User form</h4>
         <div className="mb-6">
           <label
