@@ -97,6 +97,20 @@ export const fetchUserDetails = createAsyncThunk(
 	}
 )
 
+export const updateUser = createAsyncThunk(
+	"admin/updateUser",
+	async (user) => {
+		const { id, userData } = user;
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		const {data} =	await axios.put(`/api/v1/admin/user/${id}`, userData, config)
+		return data.success
+	}
+)
+
 const AdminSlice = createSlice({
 	name: "admin",
 	initialState,
@@ -113,7 +127,10 @@ const AdminSlice = createSlice({
 		},
 		resetDeletedUser(state,action) {
 			state.isUserDeleted = false;
-		}
+		},
+		resetUpdateUser(state,action) {
+			state.updated = false;
+		},
 	},
 	extraReducers: {
 		[fetchAdminProducts.pending]: (state, action) => {
@@ -182,9 +199,13 @@ const AdminSlice = createSlice({
 			state.isLoading = false;
 			state.userDetail = action.payload.user;
 		},
+		[updateUser.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.updated = action.payload;
+		},
 	}
 })
 
-export const {resetDeletedProduct, resetUpdateProduct, resetDeletedOrder, resetDeletedUser} = AdminSlice.actions
+export const {resetDeletedProduct, resetUpdateProduct, resetDeletedOrder, resetDeletedUser, resetUpdateUser} = AdminSlice.actions
 export const getSelectedUser = (state) => state.admin.userDetail;
 export default AdminSlice.reducer;
