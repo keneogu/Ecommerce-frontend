@@ -8,6 +8,7 @@ const initialState = {
 	totalAmount: 0,
 	product: {},
 	userDetail: {},
+	orderDetail: {},
 	status: null,
 	success: false,
 	isLoading: true,
@@ -125,6 +126,16 @@ export const updateOrder = createAsyncThunk(
 	}
 )
 
+export const adminOrderDetails = createAsyncThunk(
+	"order/fetchOrderDetails",
+	async (id) => {
+		const {data} =	await axios.get(`/api/v1/order/${id}`)
+
+		return data
+		// console.log(data)
+	}
+)
+
 const AdminSlice = createSlice({
 	name: "admin",
 	initialState,
@@ -216,6 +227,20 @@ const AdminSlice = createSlice({
 		[updateUser.fulfilled]: (state, action) => {
 			state.isLoading = false;
 			state.updated = action.payload;
+		},
+		[adminOrderDetails.pending]: (state, action) => {
+			state.status = "pending";
+			state.isLoading = true
+		},
+		[adminOrderDetails.fulfilled]: (state, action) => {
+			state.success = action.payload.success;
+			state.isLoading = false;
+			state.orderDetail = action.payload.cart;
+		},
+		[adminOrderDetails.rejected]: (state, action) => {
+			state.status = "rejected";
+			state.success = false;
+			state.isLoading = true;
 		},
 		[updateOrder.fulfilled]: (state, action) => {
 			state.isLoading = false;
