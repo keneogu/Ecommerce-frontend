@@ -40,6 +40,7 @@ import UpdateProduct from "./admin/UpdateProduct";
 import OrderList from "./admin/OrderList";
 import UsersList from "./admin/UsersList";
 import UpdateUser from "./admin/UpdateUser";
+import ProcessOrder from "./admin/ProcessOrder";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -97,6 +98,7 @@ function App() {
               <Route path="/admin/orders" element={<OrderList />} />
               <Route path="/admin/users" element={<UsersList />} />
               <Route path="/admin/user/:id" element={<UpdateUser />} />
+              <Route path="/admin/order/:id" element={<ProcessOrder />} />
             </Route>
           </Route>
           <Route path="/notfound" element={<NotFound />} />
