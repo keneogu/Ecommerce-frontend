@@ -3,29 +3,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../components/layout/Loader";
 import Head from "../components/layout/Head";
-import { fetchOrderDetails } from "../features/OrderSlice";
+import { updateOrder, resetUpdateProduct, adminOrderDetails } from "../features/AdminSlice";
+import { toast } from "react-toastify";
 
 const ProcessOrder = () => {
   const { id } = useParams();
-	const [status, setStatus] = useState("")
-  const { isLoading, cart } = useSelector((state) => state.order.orderDetail);
-	console.log(cart);
+	const [status, setStatus] = useState("");
+  const { orderDetail, isLoading, isUpdated } = useSelector((state) => state.admin);
+
+  // const {isUpdated} = useSelector((state) => state.admin);
+	console.log(orderDetail);
 
   const {
+    _id,
     shippingInfo,
     orderedItems,
     paymentInfo,
     user,
     totalPrice,
     orderStatus,
-  } = cart;
+  } = orderDetail;
   const dispatch = useDispatch();
 
   useEffect(() => {
-		if(user) {
-			dispatch(fetchOrderDetails(id));
-		}
-  }, [dispatch, id, user]);
+			dispatch(adminOrderDetails(id));
+
+    if (isUpdated) {
+      toast.success('Order updated successfully');
+      dispatch(resetUpdateProduct())
+  }
+  }, [dispatch, id, isUpdated]);
+
+	const updateHandler = (id) => {
+
+		const formData = new FormData();
+		formData.set('status', status);
+
+		dispatch(updateOrder({id: id, orderData: formData}))
+}
 
   const shippingDetails =
     shippingInfo &&
@@ -41,7 +56,7 @@ const ProcessOrder = () => {
           <Loader />
         ) : (
           <div>
-            <h2>Order #{cart._id}</h2>
+            <h2>Order #{_id}</h2>
 
             <div>
               <p>
@@ -73,10 +88,10 @@ const ProcessOrder = () => {
               <h4 className="my-4">Order Status:</h4>
               <p
                 className={
-                  cart.orderStatus &&
-                  String(cart.orderStatus).includes("Delivered")
-                    ? "greenColor"
-                    : "redColor"
+                  orderStatus &&
+                  String(orderStatus).includes("Delivered")
+                    ? "text-green-500"
+                    : "text-red-500"
                 }
               >
                 <b>{orderStatus}</b>
@@ -135,6 +150,7 @@ const ProcessOrder = () => {
 
               <button
                 className=""
+								onClick={() => updateHandler(_id)}
               >
                 Update Status
               </button>
