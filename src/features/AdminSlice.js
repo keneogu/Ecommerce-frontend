@@ -111,6 +111,20 @@ export const updateUser = createAsyncThunk(
 	}
 )
 
+export const updateOrder = createAsyncThunk(
+	"admin/updateUser",
+	async (order) => {
+		const { id, orderData } = order;
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+		const {data} =	await axios.put(`/api/v1/admin/order/${id}`, orderData, config)
+		return data.success
+	}
+)
+
 const AdminSlice = createSlice({
 	name: "admin",
 	initialState,
@@ -202,6 +216,10 @@ const AdminSlice = createSlice({
 		[updateUser.fulfilled]: (state, action) => {
 			state.isLoading = false;
 			state.updated = action.payload;
+		},
+		[updateOrder.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.isUpdated = action.payload;
 		},
 	}
 })
