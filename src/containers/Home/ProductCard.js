@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Rating from "../../components/Rating";
 
 const ProductCard = ({ product }) => {
   return (
@@ -33,14 +34,7 @@ const ProductCard = ({ product }) => {
             </div>
           </div>
           <div className="p-2 flex items-center text-sm text-gray-600">
-            <div className="ratings mt-auto">
-              <div className="rating-outer">
-                <div
-                  className="rating-inner"
-                  style={{ width: `${(product.ratings / 5) * 100}%` }}
-                ></div>
-              </div>
-            </div>
+            <Rating value={product.ratings} />
             <p>{product.ratings}</p>
           </div>
           <span className="ml-2">{product.numOfReviews} Reviews</span>
