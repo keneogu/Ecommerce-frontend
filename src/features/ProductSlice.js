@@ -6,6 +6,7 @@ const initialState = {
 	status: null,
 	isLoading: true,
 	productDetail: {},
+	success: false,
 	search: ''
 }
 
@@ -51,6 +52,9 @@ const ProductSlice = createSlice({
 		searchItems:(state, action) => {
 			state.search = action.payload
 		},
+		resetReview(state,action) {
+			state.success = false;
+		},
 	},
 	extraReducers: {
 		[fetchProducts.pending]: (state, action) => {
@@ -79,6 +83,6 @@ const ProductSlice = createSlice({
 	}
 });
 
-export const { searchItems } = ProductSlice.actions
+export const { searchItems, resetReview } = ProductSlice.actions
 export const getSelectedProduct = (state) => state.products.productDetail;
 export default ProductSlice.reducer;
