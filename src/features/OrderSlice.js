@@ -2,91 +2,87 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-	orders: {},
-	order: [],
-	status: null,
-	isLoading: true,
-	orderDetail: {},
+  orders: {},
+  order: [],
+  status: null,
+  isLoading: true,
+  orderDetail: {},
 };
 
-export const createOrder = createAsyncThunk("order/createOrder", 
-	async (cart) => {
-		const config = {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}
-		
-		const { data } =	await axios.post('/api/v1/order/new', cart, config)
-		return data
-	}
-)
+export const createOrder = createAsyncThunk(
+  "order/createOrder",
+  async (cart) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-export const myOrders = createAsyncThunk(
-	"order/myOrders",
-	async () => {
-		const {data} =	await axios.get('/api/v1/orders/me')
+    const { data } = await axios.post("/api/v1/order/new", cart, config);
+    return data;
+  }
+);
 
-		return data
-		// console.log(data)
-	}
-)
+export const myOrders = createAsyncThunk("order/myOrders", async () => {
+  const { data } = await axios.get("/api/v1/orders/me");
+
+  return data;
+});
 
 export const fetchOrderDetails = createAsyncThunk(
-	"order/fetchOrderDetails",
-	async (id) => {
-		const {data} =	await axios.get(`/api/v1/order/${id}`)
+  "order/fetchOrderDetails",
+  async (id) => {
+    const { data } = await axios.get(`/api/v1/order/${id}`);
 
-		return data
-		// console.log(response)
-	}
-)
+    return data;
+  }
+);
 
 const OrderSlice = createSlice({
-	name: "orders",
-	initialState,
-	reducers: {},
-	extraReducers: {
-		[createOrder.pending]: (state, action) => {
-			state.status = 'pending'
-			state.isLoading = true
-		},
-		[createOrder.fulfilled]: (state, action) => {
-			state.status = "success"
-			state.isLoading = false
-			state.orders = action.payload.cart
-		},
-		[createOrder.rejected]: (state, action) => {
-			state.status = "rejected"
-			state.isLoading = false
-		},
-		[myOrders.pending]: (state, action) => {
-			state.status = 'pending'
-			state.isLoading = true
-		},
-		[myOrders.fulfilled]: (state, action) => {
-			state.status = action.payload.status
-			state.isLoading = false
-			state.order = action.payload
-		},
-		[myOrders.rejected]: (state, action) => {
-			state.status = "rejected"
-			state.isLoading = false
-		},
-		[fetchOrderDetails.pending]: (state, action) => {
-			state.status = 'pending'
-			state.isLoading = true
-		},
-		[fetchOrderDetails.fulfilled]: (state, action) => {
-			state.status = "success"
-			state.isLoading = false
-			state.orderDetail = action.payload
-		},
-		[fetchOrderDetails.rejected]: (state, action) => {
-			state.status = "rejected"
-			state.isLoading = false
-		},
-	}
-})
+  name: "orders",
+  initialState,
+  reducers: {},
+  extraReducers: {
+    [createOrder.pending]: (state, action) => {
+      state.status = "pending";
+      state.isLoading = true;
+    },
+    [createOrder.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.isLoading = false;
+      state.orders = action.payload.cart;
+    },
+    [createOrder.rejected]: (state, action) => {
+      state.status = "rejected";
+      state.isLoading = false;
+    },
+    [myOrders.pending]: (state, action) => {
+      state.status = "pending";
+      state.isLoading = true;
+    },
+    [myOrders.fulfilled]: (state, action) => {
+      state.status = action.payload.status;
+      state.isLoading = false;
+      state.order = action.payload;
+    },
+    [myOrders.rejected]: (state, action) => {
+      state.status = "rejected";
+      state.isLoading = false;
+    },
+    [fetchOrderDetails.pending]: (state, action) => {
+      state.status = "pending";
+      state.isLoading = true;
+    },
+    [fetchOrderDetails.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.isLoading = false;
+      state.orderDetail = action.payload;
+    },
+    [fetchOrderDetails.rejected]: (state, action) => {
+      state.status = "rejected";
+      state.isLoading = false;
+    },
+  },
+});
 
 export default OrderSlice.reducer;
