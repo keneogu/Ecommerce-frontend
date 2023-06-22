@@ -5,6 +5,8 @@ import ProductCard from './ProductCard';
 import Head from '../../components/layout/Head'
 import Loader from '../../components/layout/Loader';
 import Pagination from 'react-js-pagination'
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -35,6 +37,21 @@ const Home = () => {
 		"Home-appliances",
 		"Sports",
 	]
+
+	const slideImages = [
+		{
+			url: 'https://res.cloudinary.com/keneogu/image/upload/v1687439021/Ecommerce/women-removebg-preview_v7dtlj.png',
+			caption: 'We offer a quality and an amazing shoes at an affordable price'
+		},
+		{
+			url: 'https://res.cloudinary.com/keneogu/image/upload/v1687447110/Ecommerce/mens_clothing_Photo_odffej-removebg-preview_o2j3ul.png',
+			caption: 'Get your quality designed t-shirt and office wears from the best online shop'
+		},
+		{
+			url: 'https://res.cloudinary.com/keneogu/image/upload/v1687447469/Ecommerce/lapis-removebg-preview_lw76zd.png',
+			caption: 'With a quality laptop accesories you can get yourself productive in no time'
+		},
+	];
 	
 	const dispatch = useDispatch();
 
@@ -57,6 +74,26 @@ const Home = () => {
 			{isLoading ? <Loader /> : (
 				<>
 					<Head title={'Best Online Shoping platform'} />
+					<div className="w-full">
+						<div className='w-full h-52 md:h-[500px] relative bg-cover bg-center bg-no-repeat overflow-hidden' style={{ backgroundImage: "url('images/shoe.jpg')" }}>
+							<div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed" style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}>
+							<Slide>
+								{slideImages.map((slideImage, index)=> (
+									<div key={index} className='overflow-hidden'>
+										<div className="flex md:justify-between content-end h-full w-full text-white md:mb-8 md:px-12">
+											<div className="md:mt-40 text-center">
+												<h3 className='lg:text-3xl uppercase italic py-3 font-semibold backdrop-brightness-200 shadow-md shadow-slate-400'>Kenz Shop</h3>
+												<p className='text-sm'>{slideImage.caption}</p>
+											</div>
+										<div className=''>
+											<img src={slideImage.url} alt="slideImage pics" className='w-full cover-full' />
+										</div>
+										</div>
+									</div>
+								))} 
+							</Slide>
+							</div>
+						</div>
 					<div className="mt-8">
 
 						<h4 className='text-gray-400 text-xl font-bold capitalize'>Latest Product</h4>
@@ -146,6 +183,7 @@ const Home = () => {
 								/>
 							</div>
 						)}
+					</div>
 					</div>
 				</>
 			)}
