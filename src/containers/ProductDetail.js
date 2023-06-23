@@ -10,13 +10,14 @@ import {
 } from "../features/ProductSlice";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
-import { addToCart } from "../features/CartSlice";
+import { getTotals, addToCart } from "../features/CartSlice";
 import Rating from "../components/Rating";
 import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const product = useSelector(getSelectedProduct);
+  const { cartItems } = useSelector((state) => state.cart);
   const { success } = useSelector(state => state.products);
   const dispatch = useDispatch();
 
@@ -63,6 +64,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     dispatch(fetchProductDetails(id));
+    dispatch(getTotals());
 
     if (success) {
       toast.success('Review posted successfully', {
@@ -71,7 +73,7 @@ const ProductDetail = () => {
       dispatch(resetReview())
       setComment("");
     }
-  }, [dispatch, id, success]);
+  }, [dispatch, id, success, cartItems]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -233,7 +235,7 @@ const ProductDetail = () => {
 									<strong>{review.name}</strong>
 									<Rating value={review.rating} />
 									<p>{review.comment}</p>
-                  <p>{review.createdAt.substring(0, 10)}</p>
+                  {/* <p>{review.createdAt.substring(0, 10)}</p> */}
 								</div>
 							))}
           </div>
