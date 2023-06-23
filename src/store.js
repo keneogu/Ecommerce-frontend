@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productReducer from "./features/ProductSlice";
+import productReducer, { fetchProducts } from "./features/ProductSlice";
 import userReducer from "./features/UserSlice";
-import orderReducer from "./features/OrderSlice";
-import cartReducer from './features/CartSlice';
+import orderReducer, { myOrders } from "./features/OrderSlice";
+import cartReducer, { getTotals } from './features/CartSlice';
 import adminReducer from './features/AdminSlice';
 
 export const store = configureStore({
@@ -15,6 +15,6 @@ export const store = configureStore({
   },
 });
 
-// store.dispatch(fetchProducts())
-// store.dispatch(getTotals())
-// store.dispatch(myOrders())
+store.dispatch(fetchProducts())
+store.dispatch(getTotals())
+store.dispatch(myOrders())
