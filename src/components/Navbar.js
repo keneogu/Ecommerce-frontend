@@ -19,22 +19,22 @@ const Navbar = () => {
 	}
 
   return (
-    <div className="flex justify-between text-white bg-kenz-400 h-14 items-center px-4">
+    <div className="flex justify-between bg-zinc-400 h-9 items-center px-4">
       <div className="link">
         <Link to="/">
-          <h3>KenzShop</h3>
+          <h3 className="lg:text-3xl uppercase italic py-3 font-bold">KenzShop</h3>
         </Link>
       </div>
 
-      <div className="bg-white border-kenz-100 border-4 rounded-md px-2 py-2 my-3">
+      {/* <div className="bg-white border-kenz-100 border-4 rounded-md px-2 py-2 my-3"> */}
         <Search navigate={navigate} searchItems={searchItems} />
-      </div>
+      {/* </div> */}
 
       <nav className="flex flex-row items-center px-2">
         {user ? (
           <div className="relative">
             <button
-              className="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+              className="flex items-center text-sm font-medium text-gray-900 rounded-full outline-0 hover:text-slate-200 md:mr-2 focus:ring-4 focus:ring-gray-100"
               type="button"
               onClick={() => setIsOpen(!isOpen)}
               onMouseEnter={() => setIsOpen(!isOpen)}
@@ -62,7 +62,7 @@ const Navbar = () => {
             <div
               className={
                 isOpen
-                  ? "z-10 mt-2 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+                  ? "z-10 mt-2 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-36"
                   : "hidden"
               }
               onMouseLeave={() => setIsOpen(false)}
@@ -70,12 +70,12 @@ const Navbar = () => {
               <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                 <div className="truncate">{user && user.user?.email}</div>
               </div>
-              <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+              <ul className="py-2 text-sm text-gray-700">
                 {user && user.user?.role === "admin"  && (
                   <li>
                     <Link
                       to="/admin"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      className="block px-4 py-2 hover:bg-gray-100"
                     >
                       Dashboard
                     </Link>
@@ -84,7 +84,7 @@ const Navbar = () => {
                 <li>
                     <Link
                       to="/orders/me"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      className="block px-4 py-2 hover:bg-gray-100"
                     >
                       Orders
                     </Link>
@@ -92,7 +92,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/me"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="block px-4 py-2 hover:bg-gray-100"
                   >
                     Profile
                   </Link>
@@ -118,11 +118,11 @@ const Navbar = () => {
         )}
         <Link to="/cart">
           <div className="flex">
-            <p>
-              <FaShoppingCart className="text-orange-700" />
+            <p className="mt-1">
+              <FaShoppingCart className="text-orange-700 font-bold" />
             </p>
-            <span>
-              <span>{cartTotalQuantity}</span>
+            <span className="text-xs">
+              <span className="bg-slate-50 rounded-full">{cartTotalQuantity}</span>
             </span>
           </div>
         </Link>
