@@ -26,7 +26,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -46,34 +46,74 @@ const Login = () => {
       ) : (
         <>
           <Head title={"Login"} />
-          <form>
-            <h3>
-              <FaSignInAlt /> Login
-            </h3>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={onChange}
-            />
-            <label htmlFor="pass">Password</label>
-            <input
-              type="password"
-              id="pass"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={onChange}
-            />
-            <hr />
-            <Link to="#">Forgot Password</Link>
-            <button onClick={handleSubmit}>Login</button>
+          <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
+            <form className="flex flex-col p-4">
+              <div className="flex py-5 font-bold">
+                <h3 className="text-xl">Login</h3>
+                <p className="pt-2 px-2">
+                  <FaSignInAlt />
+                </p>
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="email"
+                  className="after:content-['*'] after:ml-0.5 block"
+                >
+                  Email
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  placeholder="Email"
+                  name="email"
+                  value={email}
+                  onChange={onChange}
+                  className="h-8 outline-0"
+                />
+              </div>
+              <hr />
+              <div className="flex flex-col">
+                <label
+                  htmlFor="pass"
+                  className="after:content-['*'] after:ml-0.5 block"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="pass"
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  onChange={onChange}
+                  className="h-8 outline-0"
+                />
+              </div>
+              <hr />
+              <div className="relative py-2">
+                <Link
+                  to="/me/password/forgot"
+                  className="absolute right-0 text-blue-800 hover:text-blue-500"
+                >
+                  Forgot Password?
+                </Link>
 
-            <Link to="/register">Register New User</Link>
-          </form>
+                <Link
+                  to="/register"
+                  className="underline italic text-slate-900 font-bold"
+                >
+                  Register
+                </Link>
+              </div>
+
+              <button
+                onClick={handleSubmit}
+                className="bg-slate-800 text-white mx-5 my-4 p-3 rounded-md font-bold hover:bg-slate-700"
+              >
+                Login
+              </button>
+            </form>
+          </div>
         </>
       )}
     </div>
