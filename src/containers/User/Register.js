@@ -67,67 +67,111 @@ const Register = () => {
       ) : (
         <>
           <Head title={"Register New User"} />
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <h3>
-              <FaUser /> Register
-            </h3>
-            <label htmlFor="name">Email</label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={onChange}
-            />
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={onChange}
-            />
-            <label htmlFor="pass">Password</label>
-            <input
-              type="password"
-              id="pass"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={onChange}
-            />
-            <div>
-              <label htmlFor="avatar">Avatar</label>
-              <div>
+          <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
+            <form
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className="flex flex-col p-4"
+            >
+              <div className="flex py-5 font-bold">
+                <h3 className="text-xl">Register</h3>
+                <p className="pt-2 px-2">
+                  <FaUser />
+                </p>
+              </div>
+              <div className="flex flex-col">
+                <label
+                  htmlFor="name"
+                  className="after:content-['*'] after:ml-0.5 block"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Name"
+                  name="name"
+                  value={name}
+                  onChange={onChange}
+                  className="h-8 outline-0"
+                />
+              </div>
+              <hr />
+              <div className="flex flex-col">
+                <label
+                  htmlFor="email"
+                  className="after:content-['*'] after:ml-0.5 block"
+                >
+                  Email
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  placeholder="Email"
+                  name="email"
+                  value={email}
+                  onChange={onChange}
+                  className="h-8 outline-0"
+                />
+              </div>
+              <hr />
+              <div className="flex flex-col">
+                <label
+                  htmlFor="pass"
+                  className="after:content-['*'] after:ml-0.5 block"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="pass"
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  onChange={onChange}
+                  className="h-8 outline-0"
+                />
+              </div>
+              <hr />
+              <div className="flex flex-col">
+                <label htmlFor="avatar">Avatar</label>
                 <div>
-                  <figure>
-                    <img
-                      src={avatarPrev}
-                      alt="avatar"
-                      className="rounded"
-                      style={{ width: 50, height: 50 }}
+                  <div>
+                    <figure>
+                      <img
+                        src={avatarPrev}
+                        alt="avatar"
+                        className="rounded"
+                        style={{ width: 50, height: 50 }}
+                      />
+                    </figure>
+                  </div>
+                  <div>
+                    <input
+                      type="file"
+                      name="avatar"
+                      id="custom-file"
+                      accept="images/*"
+                      onChange={onChange}
                     />
-                  </figure>
-                </div>
-                <div>
-                  <input
-                    type="file"
-                    name="avatar"
-                    id="custom-file"
-                    accept="images/*"
-                    onChange={onChange}
-                  />
-                  <label htmlFor="custom-file">Choose Avatar</label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <hr />
-            <button disabled={isLoading ? true : false}>Register</button>
-
-            <Link to="/login">Already have an account</Link>
-          </form>
+              <hr />
+              <Link
+                to="/login"
+                className="text-right text-blue-800 hover:text-blue-500 py-2"
+              >
+                Already have an account?
+              </Link>
+              <button
+                disabled={isLoading ? true : false}
+                className="bg-slate-800 text-white mx-5 my-4 p-3 rounded-md font-bold hover:bg-slate-700"
+              >
+                Register
+              </button>
+            </form>
+          </div>
         </>
       )}
     </div>
