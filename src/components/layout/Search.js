@@ -19,10 +19,10 @@ const Search = ({ navigate, searchItems}) => {
 
 
 	return (
-		<form onSubmit={handleSearch}>
-			<div className='bg-white border-kenz-100 border-4 rounded-md px-2 py-2 my-3'>
-				<input type='text' className='bg-lime-100' ref={nameInput} placeholder='Enter Product Name' />
-				<button><FaSearch className='text-black w-6 h-6 bg-gray-100' /></button>
+		<form onSubmit={handleSearch} className='my-4'>
+			<div className='flex bg-white w-full outline-1 rounded-xl py-2'>
+				<input type='text' ref={nameInput} placeholder='Enter Product Name...' className='p-1 mx-2 bg-stone-200 outline-0 rounded-md placeholder:italic placeholder:font-thin placeholder:text-sm' />
+				<button><FaSearch className='text-slate-200 w-6 h-6' /></button>
 			</div>
 		</form>
 	)
