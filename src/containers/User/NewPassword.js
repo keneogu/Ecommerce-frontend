@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { resetPassword } from "../../features/UserSlice";
 import Head from "../../components/layout/Head";
 import { Navigate, useParams } from "react-router-dom";
+import { FaSignInAlt } from "react-icons/fa";
+
 
 const NewPassword = () => {
   const {token} = useParams();

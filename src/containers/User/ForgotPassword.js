@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { forgotPassword } from "../../features/UserSlice";
+import { FaSignInAlt } from "react-icons/fa";
 import Head from "../../components/layout/Head";
 
 const ForgotPassword = () => {
