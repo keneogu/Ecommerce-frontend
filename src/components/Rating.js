@@ -7,11 +7,11 @@ const Rating = ({ value }) => {
 		return (
 				<span key={index}>
 				{value >= index + 1 ? (
-					<FaStar className="text-amber-400" />
+					<FaStar className="text-amber-400 md:text-lg" />
 				) : value >= number ? (
-					<FaStarHalfAlt className="text-amber-400" />
+					<FaStarHalfAlt className="text-amber-400 md:text-lg" />
 				) : (
-					<AiOutlineStar className="text-slate-400"/>
+					<AiOutlineStar className="text-slate-400 md:text-lg"/>
 				)}
 			</span>
 		)
