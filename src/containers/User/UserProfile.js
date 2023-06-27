@@ -46,7 +46,7 @@ const UserProfile = () => {
                   <Link to="/orders/me" className="bg-slate-700 text-white p-3">My Orders</Link>
                 )}
 								<div className="flex text-blue-600 text-lg md:text-base">
-									<Link to="/password/update" className="mr-1"> Change Password</Link>
+									<Link to="/me/password/update" className="mr-1"> Change Password</Link>
 									<FaArrowAltCircleRight className="mt-1"/>
 								</div>
                 
