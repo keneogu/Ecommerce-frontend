@@ -26,9 +26,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* <div className="bg-white border-kenz-100 border-4 rounded-md px-2 py-2 my-3"> */}
         <Search navigate={navigate} searchItems={searchItems} />
-      {/* </div> */}
 
       <nav className="flex flex-row items-center px-2">
         {user ? (
