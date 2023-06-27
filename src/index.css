@@ -9,4 +9,12 @@
 		@apply bg-slate-50;
 		font-family: 'Kanit', sans-serif;
 	}
+
+	th {
+		@apply text-left p-[5px] text-white bg-slate-700;
+	}
+	
+	td {
+		@apply py-3 px-1
+	}
 }
