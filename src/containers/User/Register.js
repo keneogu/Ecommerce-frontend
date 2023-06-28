@@ -141,7 +141,7 @@ const Register = () => {
                       <img
                         src={avatarPrev}
                         alt="avatar"
-                        className="rounded"
+                        className="rounded-full border-2 border-slate-700"
                         style={{ width: 50, height: 50 }}
                       />
                     </figure>
