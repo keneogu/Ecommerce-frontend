@@ -17,59 +17,43 @@ const Orders = () => {
 			dispatch(myOrders())
 		}
 	}, [dispatch, order.cart])
-
-	const setOrders = () => {
-		const data = {
-			columns: [
-				{
-					label: 'Order Id',
-					field: 'id',
-					sort: 'asc'
-				},
-				{
-					label: 'Num of items',
-					field: 'numOfItems',
-					sort: 'asc'
-				},
-				{
-					label: 'Amount',
-					field: 'amount',
-					sort: 'asc'
-				},
-				{
-					label: 'Status',
-					field: 'status',
-					sort: 'asc'
-				},
-				{
-					label: 'Actions',
-					field: 'actions',
-					sort: 'asc'
-				},
-			],
-			rows: []
-		}
-			order.cart?.forEach(order => {
-				data.rows.push({
-					id: order._id,
-					numOfItems: order.orderedItems.length,
-					amount: `$${order.totalPrice}`,
-					status: order.orderStatus && String(order.orderStatus).includes('Delivered') ? <p className='text-green'>{order.orderStatus}</p> : <p className='text-red'>{order.orderStatus}</p>,
-					actions: <Link to={`/order/${order._id}`}>
-						<FaEye />
-					</Link>
-				})
-			})
-		return data;
-	}
 	
 	return (
-		<div>
+		<div className='container mx-auto'>
 			<Head title={'Best Online Shoping platform'} />
-
-			<h2 className='mt-4'>My Orders</h2>
 			{isLoading ? <Loader /> : (
-				<MDBDataTable data={setOrders()} className="px-3 border" bordered striped hover />
+				<div>
+				<h2 className='m-5 font-bold text-2xl'>My Orders</h2>
+				<table className="md:w-5/6 mx-auto border-collapse table-auto md:mr-12">
+					<thead>
+						<tr>
+							<th>Order ID</th>
+							<th>NumofItems</th>
+							<th>Amount</th>
+							<th>Status</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{order.cart?.forEach(order => (
+							<tr key={order._id}>
+								<td>{order._id}</td>
+								<td>{order.orderedItems.length}</td>
+								<td>${order.totalPrice}</td>
+								<td>{order.orderStatus && String(order.orderStatus).includes('Delivered')
+									? <p style={{ color: 'green' }}>{order.orderStatus}</p>
+									: <p style={{ color: 'red' }}>{order.orderStatus}</p>}
+								</td>
+								<td>
+									<Link to={`/order/${order._id}`} className='py-1 px-2'>
+										<FaEye />
+									</Link>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+				</div>
 			)}
 		</div>
 	)
