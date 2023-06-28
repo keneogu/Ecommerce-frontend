@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loadUser, updateUserProfile } from "../../features/UserSlice";
+import { FaUser } from "react-icons/fa";
 import Head from "../../components/layout/Head";
 
 const UserUpdateProfile = () => {
@@ -55,11 +56,25 @@ const UserUpdateProfile = () => {
   return (
     <div>
       <Head title={"Update User"} />
-      <div>
-        <div>
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <h3>Update User</h3>
-            <label htmlFor="name">Name</label>
+      <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
+        <form
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+          className="flex flex-col p-4"
+        >
+          <div className="flex py-5 font-bold">
+            <h3 className="text-xl">Update User</h3>
+            <p className="pt-2 px-2">
+              <FaUser />
+            </p>
+          </div>
+          <div className="flex flex-col my-1">
+            <label
+              htmlFor="name"
+              className="after:content-['*'] after:ml-0.5 block"
+            >
+              Name
+            </label>
             <input
               type="text"
               id="name"
@@ -67,8 +82,16 @@ const UserUpdateProfile = () => {
               name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="h-8 border-2 border-slate-700 rounded-md outline-0 px-2"
             />
-            <label htmlFor="email">Email</label>
+          </div>
+          <div className="flex flex-col my-1">
+            <label
+              htmlFor="email"
+              className="after:content-['*'] after:ml-0.5 block"
+            >
+              Email
+            </label>
             <input
               type="text"
               id="email"
@@ -76,36 +99,47 @@ const UserUpdateProfile = () => {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="h-8 border-2 border-slate-700 rounded-md outline-0 px-2"
             />
+          </div>
+
+          <div className="my-1">
+            <label
+              htmlFor="avatar"
+              className="after:content-['*'] after:ml-0.5 block"
+            >
+              Avatar
+            </label>
             <div>
-              <label htmlFor="avatar">Avatar</label>
-              <div>
-                <div>
-                  <figure>
-                    <img
-                      src={avatarPrev}
-                      alt="avatar"
-                      className="rounded"
-                      style={{ width: 50, height: 50 }}
-                    />
-                  </figure>
-                </div>
-                <div>
-                  <input
-                    type="file"
-                    name="avatar"
-                    id="custom-file"
-                    accept="images/*"
-                    onChange={onChange}
+              <div className="my-2">
+                <figure>
+                  <img
+                    src={avatarPrev}
+                    alt="avatar"
+                    className="rounded-full border-2 border-slate-700"
+                    style={{ width: 80, height: 80 }}
                   />
-                  <label htmlFor="custom-file">Choose Avatar</label>
-                </div>
+                </figure>
+              </div>
+              <div>
+                <input
+                  type="file"
+                  name="avatar"
+                  id="custom-file"
+                  accept="images/*"
+                  onChange={onChange}
+                />
               </div>
             </div>
-            <hr />
-            <button disabled={isLoading ? true : false}>Update User</button>
-          </form>
-        </div>
+          </div>
+          <hr />
+          <button
+            disabled={isLoading ? true : false}
+            className="bg-slate-800 text-white mx-5 my-4 p-3 rounded-md font-bold hover:bg-slate-700"
+          >
+            Update User
+          </button>
+        </form>
       </div>
     </div>
   );
