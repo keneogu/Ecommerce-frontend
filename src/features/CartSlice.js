@@ -98,7 +98,7 @@ const cartSlice = createSlice({
         }
       );
       state.cartTotalQuantity = quantities;
-      state.cartTotalAmount = total.toFixed(2);
+      state.cartTotalAmount = total;
     },
     getShippingInfo(state, action) {
       const shippingInfo = action.payload;
