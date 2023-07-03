@@ -10,7 +10,7 @@ const OrderDetails = () => {
 	const { isLoading, orderDetail } = useSelector(state => state.order);
 	console.log(orderDetail)
 
-	const {shippingInfo, orderedItems, paymentInfo, user, totalPrice, orderStatus} = orderDetail;
+	const {shippingInfo, orderedItems, paymentInfo, user, totalPrice, orderStatus} = orderDetail.cart;
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -28,11 +28,11 @@ const OrderDetails = () => {
 			{isLoading ? <Loader /> : (
 				<div>
 					<div>
-						<h1>{orderDetail._id}</h1>
+						<h1>{orderDetail.cart._id}</h1>
 						<h4>The Shipping Info:</h4>
 						<p><b>Name:</b>{user && user.name}</p>
-						<p><b>Phone:</b>{shippingInfo && shippingInfo.phone}</p>
-						<p>{shippingDetails}</p>
+						<p><b>Phone:</b>{shippingInfo && shippingInfo.phoneNo}</p>
+						<p><b>Address:</b>{shippingDetails}</p>
 						<p><b>Amount:</b>{totalPrice}</p>
 
 						<hr />
@@ -41,7 +41,7 @@ const OrderDetails = () => {
 						<p className={isPaid ? "text-green-400" : "text-red-500"}><b>{isPaid ? "PAID" : "NOT PAID"}</b></p>
 
 						<h4>Order Items</h4>
-						<p>{orderDetail.orderStatus && String(orderDetail.orderStatus).includes('Delivered') ? 'text-green-500' : 'text-red-500'}<b>{orderStatus}</b></p>
+						<p className={orderDetail.orderStatus && String(orderDetail.orderStatus).includes('Delivered') ? 'text-green-500' : 'text-red-500'}><b>{orderStatus}</b></p>
 						<hr />
 
 						<div>
