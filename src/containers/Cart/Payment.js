@@ -34,15 +34,15 @@ const Payment = () => {
 
   const order = {
     orderedItems: cartItems,
-    shippingInfo
-  }
+    shippingInfo,
+  };
 
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
-  if(orderInfo) {
-    order.itemsPrice = orderInfo.itemsPrice
-    order.shippingPrice = orderInfo.shippingPrice
-    order.taxPrice = orderInfo.taxPrice
-    order.totalPrice = orderInfo.totalPrice
+  if (orderInfo) {
+    order.itemsPrice = orderInfo.itemsPrice;
+    order.shippingPrice = orderInfo.shippingPrice;
+    order.taxPrice = orderInfo.taxPrice;
+    order.totalPrice = orderInfo.totalPrice;
   }
 
   const paymentData = {
@@ -55,67 +55,105 @@ const Payment = () => {
 
     let res;
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    res = await axios.post("/api/v1/payment/process", paymentData, config);
+
+    const clientSecret = res.data.client_secret;
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardNumberElement),
+        billing_details: {
+          name: user.name,
+          email: user.email,
         },
-      };
+      },
+    });
 
-      res = await axios.post("/api/v1/payment/process", paymentData, config);
+    console.log(result.paymentIntent.status);
 
-      const clientSecret = res.data.client_secret;
-
-      if (!stripe || !elements) {
-        return;
-      }
-
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardNumberElement),
-          billing_details: {
-            name: user.name,
-            email: user.email,
-          },
-        },
-      });
-
-      if (result.error) {
-        alert(result.error.message);
-        document.querySelector("#payment_btn").disabled = false;
+    if (result.error) {
+      alert(result.error.message);
+      document.querySelector("#payment_btn").disabled = false;
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        order.paymentInfo = {
+          id: result.paymentIntent.id,
+          status: result.paymentIntent.status,
+        };
+        dispatch(createOrder(order));
+        navigate("/orders/me");
       } else {
-        if (result.paymentIntent.status === "succeeded") {
-          order.paymentInfo = {
-            id: result.paymentIntent.id,
-            status: result.paymentIntent.status
-          }
-          dispatch(createOrder(order))
-          navigate('/success')
-        }else {
-          alert("'There is some issue while payment processing...")
-        }
+        alert("'There is some issue while payment processing...");
       }
+    }
   };
 
   return (
     <div>
       <Head title={"Payment Page"} />
       <Checkout shipping confirmOrder payment />
-      <div>
-        <form onSubmit={handleSubmit}>
-          <h1>Card Info</h1>
-          <div>
-            <label htmlFor="card_num">Card Number</label>
-            <CardNumberElement type="text" id="card_num" options={options} />
+      <div className="md:w-full md:mx-auto flex flex-col md:justify-center md:items-center my-16 mx-4">
+        <form onSubmit={handleSubmit} className="flex flex-col p-4">
+          <h1 className="my-4 text-slate-700 text-4xl font-bold text-center">
+            Card Info
+          </h1>
+          <div className="my-2 text-lg">
+            <label
+              htmlFor="card_num"
+              className="after:content-['*'] after:ml-0.5 block"
+            >
+              Card Number
+            </label>
+            <CardNumberElement
+              type="text"
+              className="h-8 md:h-6 border-2 border-slate-700 rounded-md outline-0 px-2 md:w-52 mt-1"
+              id="card_num"
+              options={options}
+            />
           </div>
-          <div>
-            <label htmlFor="card_exp">Card Expiry Date</label>
-            <CardExpiryElement type="text" id="card_exp" options={options} />
+          <div className="my-2 text-lg">
+            <label
+              htmlFor="card_exp"
+              className="after:content-['*'] after:ml-0.5 block"
+            >
+              Card Expiry Date
+            </label>
+            <CardExpiryElement
+              type="text"
+              className="h-8 md:h-6 border-2 border-slate-700 rounded-md outline-0 px-2 w-full mt-1"
+              id="card_exp"
+              options={options}
+            />
           </div>
-          <div>
-            <label htmlFor="card_cvc">Card CvC Number</label>
-            <CardCvcElement type="text" id="card_cvc" options={options} />
+          <div className="my-2 text-lg">
+            <label
+              htmlFor="card_cvc"
+              className="after:content-['*'] after:ml-0.5 block"
+            >
+              Card CvC Number
+            </label>
+            <CardCvcElement
+              type="text"
+              className="h-8 md:h-6 border-2 border-slate-700 rounded-md outline-0 px-2 w-full mt-1"
+              id="card_cvc"
+              options={options}
+            />
           </div>
-          <button type="submit" id="payment_btn" className="bg-orange-700">
+          <button
+            type="submit"
+            id="payment_btn"
+            className="bg-slate-800 text-white mx-5 my-4 p-3 rounded-md font-bold hover:bg-slate-700"
+          >
             Pay
           </button>
         </form>
