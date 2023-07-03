@@ -29,15 +29,17 @@ const ConfirmOrder = () => {
   };
 
   return (
-    <div>
+    <div className="container mx-auto my-20">
       <Head title={"Confirm Order"} />
-      <Checkout shipping />
-      <div>
-        <div>
-          <h4>Shipping Info</h4>
+      <Checkout shipping confirmOrder />
+      <div className="md:w-3/4 md:mx-auto flex flex-col md:flex-row md:justify-between justify-center md:items-center my-16 mx-4">
+        <div className="w-full mr-6">
+          <h4 className="my-4 text-slate-700 text-4xl font-bold text-center">
+            Confirm Order
+          </h4>
           <p>
             <b>Name:</b>
-            {user && user?.name}
+            {user && user.user?.name}
           </p>
           <p>
             <b>Phone:</b>
@@ -45,18 +47,23 @@ const ConfirmOrder = () => {
           </p>
           <p>
             <b>Address:</b>
-            {`${shippingInfo.phoneNo}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`}
+            {` ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`}
           </p>
 
           <hr />
           <h4>Your Cart Items</h4>
           <hr />
           {cartItems.map((item) => (
-              <div key={item._id}>
+            <div key={item._id}>
+              <div className="md:flex text-lg lg:text-base md:p-3 items-center w-full my-5 bg-white shadow-lg rounded-lg">
                 <div>
-                  <div>
-                    <img src={item.image} alt="item Product" />
-                  </div>
+                  <img
+                    src={item.image}
+                    alt="item Product"
+                    className="md:w-24 md:h-24"
+                  />
+                </div>
+                <div className="ml-9 p-4">
                   <div>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
@@ -68,30 +75,38 @@ const ConfirmOrder = () => {
                   </div>
                 </div>
               </div>
+            </div>
           ))}
         </div>
-        <div>
+        <div className="block m-2 md:flex md:justify-end bg-white shadow-lg rounded-lg px-3">
           <div>
-            <h4>Order Summary</h4>
+            <h2 className="w-full bg-slate-700 text-center p-[5px] text-white rounded-xl">
+              Order Summary
+            </h2>
             <hr />
-            <p>
+            <p className="text-center pt-1">
               Subtotal: <span>{cartTotalAmount}</span>
             </p>
-            <p>
+            <p className="text-center pt-1">
               Shipping: <span>{shippingPrice}</span>
             </p>
-            <p>
-              Tax: <span>{taxPrice}</span>
+            <p className="text-center pt-1">
+              Tax: <span className="text-right">{taxPrice}</span>
             </p>
 
             <hr />
 
-            <p>
+            <p className="text-center py-1">
               Total: <span>{totalPrice}</span>
             </p>
 
             <hr />
-            <button onClick={processToPayment}>Proceed to Payment</button>
+            <button
+              onClick={processToPayment}
+              className="block w-full border-2 m-1 rounded-md bg-slate-700 hover:bg-slate-600 text-white text-center p-2"
+            >
+              Proceed to Payment
+            </button>
           </div>
         </div>
       </div>
