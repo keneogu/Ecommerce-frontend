@@ -42,7 +42,7 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto my-20">
-      <h2 className="text-center mb-3 font-extrabold text-3xl">
+      <h2 className="text-center mb-3 text-slate-700 font-extrabold text-3xl">
         Shopping Cart
       </h2>
       {cartItems.length === 0 ? (
@@ -142,20 +142,22 @@ const Cart = () => {
                 Ordered Products Summary
               </h2>
               <table className="border-3 solid w-full max-w-[350px]">
-                <tr>
-                  <td>Total Products</td>
-                  <td className="text-right">
-                    <h2>{cartItems.length}</h2>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span>Subtotal</span>
-                  </td>
-                  <td className="text-right">
-                    <span className="">${cart.cartTotalAmount}</span>
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Total Products</td>
+                    <td className="text-right">
+                      <h2>{cartItems.length}</h2>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span>Subtotal</span>
+                    </td>
+                    <td className="text-right">
+                      <span className="">${cart.cartTotalAmount}</span>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
               <div className="">
                 <p className="text-center text-sm text-slate-500 italic">
