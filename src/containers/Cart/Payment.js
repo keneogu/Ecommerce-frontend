@@ -11,6 +11,7 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+import { clearCart } from "../../features/CartSlice";
 import { createOrder } from "../../features/OrderSlice";
 
 const options = {
@@ -38,6 +39,7 @@ const Payment = () => {
   };
 
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+
   if (orderInfo) {
     order.itemsPrice = orderInfo.itemsPrice;
     order.shippingPrice = orderInfo.shippingPrice;
@@ -91,6 +93,7 @@ const Payment = () => {
           status: result.paymentIntent.status,
         };
         dispatch(createOrder(order));
+        dispatch(clearCart());
         navigate("/orders/me");
       } else {
         alert("'There is some issue while payment processing...");
@@ -152,7 +155,7 @@ const Payment = () => {
           <button
             type="submit"
             id="payment_btn"
-            className="bg-slate-800 text-white mx-5 my-4 p-3 rounded-md font-bold hover:bg-slate-700"
+            className="bg-slate-800 text-white mx-5 my-4 p-3 rounded-md font-bold hover:bg-slate-700 cursor-pointer"
           >
             Pay
           </button>
