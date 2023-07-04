@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -44,6 +45,7 @@ import ProcessOrder from "./admin/ProcessOrder";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
+  const { user } = useSelector(state => state.user)
 
   useEffect(() => {
     store.dispatch(loadUser());
@@ -104,7 +106,7 @@ function App() {
           <Route path="/notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/notfound" replace />} />
         </Routes>
-        <Footer />
+        {!user && user?.user.role !== 'admin' && <Footer />}
       </Router>
     </div>
   );
