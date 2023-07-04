@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../../components/layout/Loader";
 import { myOrders } from "../../features/OrderSlice";
-import Head from "../../components/layout/Head";
+import { fetchOrderDetails } from "../../features/OrderSlice";
 import { FaEye } from "react-icons/fa";
 
 const Orders = () => {
@@ -19,7 +19,6 @@ const Orders = () => {
 
   return (
     <div className="container mx-auto">
-      <Head title={"Best Online Shoping platform"} />
       {isLoading ? (
         <Loader />
       ) : (
@@ -50,7 +49,7 @@ const Orders = () => {
                     )}
                   </td>
                   <td>
-                    <Link to={`/order/${order._id}`} className="py-1 px-2">
+                    <Link onClick={() => dispatch(fetchOrderDetails(order._id))} to={`/order/${order._id}`} className="py-1 px-2">
                       <FaEye />
                     </Link>
                   </td>

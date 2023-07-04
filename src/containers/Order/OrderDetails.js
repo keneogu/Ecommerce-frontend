@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Loader from "../../components/layout/Loader";
-import { fetchOrderDetails } from "../../features/OrderSlice";
-import Head from "../../components/layout/Head";
 
 const OrderDetails = () => {
-  const { id } = useParams();
   const { isLoading, orderDetail } = useSelector((state) => state.order);
+
   console.log(orderDetail);
 
   const {
@@ -18,11 +16,6 @@ const OrderDetails = () => {
     totalPrice,
     orderStatus,
   } = orderDetail.cart;
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchOrderDetails(id));
-  }, [dispatch, id]);
 
   const shippingDetails =
     shippingInfo &&
@@ -33,7 +26,6 @@ const OrderDetails = () => {
 
   return (
     <div className="container mx-auto">
-      <Head title={"order Details"} />
 
       {isLoading ? (
         <Loader />
