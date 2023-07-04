@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginUser } from "../../features/UserSlice";
-import Head from "../../components/layout/Head";
 import Loader from "../../components/layout/Loader";
 import { FaSignInAlt } from "react-icons/fa";
 
@@ -45,7 +44,6 @@ const Login = () => {
         <Loader />
       ) : (
         <>
-          <Head title={"Login"} />
           <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
             <form className="flex flex-col p-4">
               <div className="flex py-5 font-bold">

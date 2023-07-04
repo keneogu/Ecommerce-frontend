@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import Loader from '../components/layout/Loader';
 import { adminFetchOrders, deleteOrder, resetDeletedOrder } from '../features/AdminSlice';
-import Head from '../components/layout/Head';
 import { toast } from 'react-toastify';
 
 const OrderList = () => {
@@ -34,7 +33,6 @@ const OrderList = () => {
 			{isLoading ? <Loader /> 
 			: 
 			<>
-			<Head title={'Admin product orders page'}/>
 				<h1>Welcome to the All products page</h1>
 
 				<table className="table-auto">

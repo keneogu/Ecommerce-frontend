@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchUserDetails, getSelectedUser, resetUpdateUser, updateUser } from "../features/AdminSlice";
-import Head from "../components/layout/Head";
 import { toast } from "react-toastify";
 
 const UpdateUser = () => {
@@ -74,7 +73,6 @@ const UpdateUser = () => {
 
 	return (
 		<div>
-			<Head title={"update User"} />
       <h1>Update User</h1>
       <form onSubmit={handleSubmit}>
         <h4>Update User form</h4>

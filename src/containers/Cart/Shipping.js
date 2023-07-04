@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { countries } from "countries-list";
-import Head from "../../components/layout/Head";
 import { getShippingInfo } from "../../features/CartSlice";
 import Checkout from "./Checkout";
 
@@ -28,7 +27,6 @@ const Shipping = () => {
 
   return (
     <div>
-      <Head title={"Shipping Info"} />
       <Checkout shipping />
       <div className="md:w-full md:mx-auto flex flex-col md:justify-center md:items-center my-16 mx-4">
         <form onSubmit={handleSubmit} className="flex flex-col p-4">

@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateUserPassword } from "../../features/UserSlice";
 import { FaSignInAlt } from "react-icons/fa";
-import Head from "../../components/layout/Head";
 
 const UserUpdatePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -32,7 +31,6 @@ const UserUpdatePassword = () => {
 
   return (
     <div>
-      <Head title={"Update Password"} />
       <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
         <form onSubmit={handleSubmit} className="flex flex-col p-4">
           <div className="flex py-5 font-bold">

@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loadUser, updateUserProfile } from "../../features/UserSlice";
 import { FaUser } from "react-icons/fa";
-import Head from "../../components/layout/Head";
 
 const UserUpdateProfile = () => {
   const [name, setName] = useState("");
@@ -55,7 +54,6 @@ const UserUpdateProfile = () => {
 
   return (
     <div>
-      <Head title={"Update User"} />
       <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
         <form
           onSubmit={handleSubmit}

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createProducts } from "../features/AdminSlice";
-import Head from "../components/layout/Head";
 import { toast } from "react-toastify";
 
 const NewProduct = () => {
@@ -114,7 +113,6 @@ const NewProduct = () => {
 
   return (
     <div>
-      <Head title={"Create new product"} />
       <div>
         <form
           onSubmit={handleSubmit}

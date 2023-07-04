@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../features/ProductSlice";
 import ProductCard from "./ProductCard";
-import Head from "../../components/layout/Head";
 import Loader from "../../components/layout/Loader";
 import Pagination from "react-js-pagination";
 import { Slide } from "react-slideshow-image";
@@ -85,7 +84,6 @@ const Home = () => {
         <Loader />
       ) : (
         <>
-          <Head title={"Best Online Shoping platform"} />
           <div className="w-full">
             <div
               className="w-full h-72 md:h-[500px] relative bg-cover bg-center bg-no-repeat overflow-hidden"

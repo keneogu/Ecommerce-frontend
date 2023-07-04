@@ -6,7 +6,6 @@ import {
   getSelectedProduct,
 } from "../features/ProductSlice";
 import { resetUpdateProduct, updateProduct } from "../features/AdminSlice";
-import Head from "../components/layout/Head";
 import { toast } from "react-toastify";
 
 const UpdateProduct = () => {
@@ -125,7 +124,6 @@ const UpdateProduct = () => {
 
   return (
     <div>
-      <Head title={"Admin Update Product"} />
       <h1>Update Product</h1>
       <form onSubmit={handleSubmit}>
         <h4>Update form</h4>

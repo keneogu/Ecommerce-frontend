@@ -4,7 +4,6 @@ import { deleteUser, fetchUsers, resetDeletedUser } from '../features/AdminSlice
 import { Link, useNavigate } from "react-router-dom";
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import Loader from '../components/layout/Loader'
-import Head from '../components/layout/Head';
 import { toast } from 'react-toastify';
 
 const UsersList = () => {
@@ -34,7 +33,6 @@ const UsersList = () => {
 			{isLoading ? <Loader /> 
 			: 
 			<>
-			<Head title={'Users list page'}/>
 				<h1>Welcome to the All Users page</h1>
 
 				<form>

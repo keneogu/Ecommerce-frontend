@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../components/layout/Loader";
-import Head from "../components/layout/Head";
 import { updateOrder, resetUpdateProduct, adminOrderDetails } from "../features/AdminSlice";
 import { toast } from "react-toastify";
 
@@ -50,7 +49,6 @@ const ProcessOrder = () => {
 
   return (
     <>
-      <Head title={"Update Order page"} />
       <div>
         {isLoading ? (
           <Loader />

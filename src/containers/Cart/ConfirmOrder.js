@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Head from "../../components/layout/Head";
 import { useSelector } from "react-redux";
 import Checkout from "./Checkout";
 
@@ -30,7 +29,6 @@ const ConfirmOrder = () => {
 
   return (
     <div className="container mx-auto my-20">
-      <Head title={"Confirm Order"} />
       <Checkout shipping confirmOrder />
       <div className="md:w-3/4 md:mx-auto flex flex-col md:flex-row md:justify-between justify-center md:items-center my-16 mx-4">
         <div className="w-full mr-6">

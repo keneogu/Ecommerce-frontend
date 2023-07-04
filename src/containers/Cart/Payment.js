@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Head from "../../components/layout/Head";
 import Checkout from "./Checkout";
 import {
   useStripe,
@@ -11,7 +10,6 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-import { clearCart } from "../../features/CartSlice";
 import { createOrder } from "../../features/OrderSlice";
 
 const options = {
@@ -93,7 +91,6 @@ const Payment = () => {
           status: result.paymentIntent.status,
         };
         dispatch(createOrder(order));
-        dispatch(clearCart());
         navigate("/orders/me");
       } else {
         alert("'There is some issue while payment processing...");
@@ -103,7 +100,6 @@ const Payment = () => {
 
   return (
     <div>
-      <Head title={"Payment Page"} />
       <Checkout shipping confirmOrder payment />
       <div className="md:w-full md:mx-auto flex flex-col md:justify-center md:items-center my-16 mx-4">
         <form onSubmit={handleSubmit} className="flex flex-col p-4">

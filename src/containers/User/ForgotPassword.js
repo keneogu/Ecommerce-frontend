@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { forgotPassword } from "../../features/UserSlice";
 import { FaSignInAlt } from "react-icons/fa";
-import Head from "../../components/layout/Head";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +26,6 @@ const ForgotPassword = () => {
   };
   return (
     <>
-      <Head title={"Update Password"} />
       <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
         <form onSubmit={handleSubmit} className="flex flex-col p-4">
           <div className="flex py-5 font-bold">

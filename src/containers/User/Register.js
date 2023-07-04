@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../features/UserSlice";
-import Head from "../../components/layout/Head";
 import Loader from "../../components/layout/Loader";
 import { FaUser } from "react-icons/fa";
 
@@ -66,7 +65,6 @@ const Register = () => {
         <Loader />
       ) : (
         <>
-          <Head title={"Register New User"} />
           <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
             <form
               onSubmit={handleSubmit}

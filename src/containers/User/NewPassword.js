@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { resetPassword } from "../../features/UserSlice";
-import Head from "../../components/layout/Head";
 import { Navigate, useParams } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
 
@@ -32,7 +31,6 @@ const NewPassword = () => {
   };
   return (
     <>
-      <Head title={"Reset Password"} />
 
       <div className="flex flex-col w-full my-36 md:w-3/6 lg:w-2/6 md:my-32 md:mx-auto bg-white shadow-md hover:shadow-xl rounded-lg">
         <form onSubmit={handleSubmit} className="flex flex-col p-4">

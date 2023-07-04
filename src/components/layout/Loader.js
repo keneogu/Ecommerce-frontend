@@ -4,7 +4,7 @@ const Loader = () => {
 	return (
 <div className="bg-gray-200 w-full min-h-screen flex justify-center items-center">
   <div className="bg-white p-10 shadow-md rounded-xl relative">
-    <svg className="w-12 h-12 animate-spin text-kenz-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12 animate-spin text-slate-800" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 4.75V6.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
       <path d="M17.1266 6.87347L16.0659 7.93413" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
       <path d="M19.25 12L17.75 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>

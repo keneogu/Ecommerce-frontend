@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import Loader from '../components/layout/Loader';
 import { fetchAdminProducts, deleteProduct, resetDeletedProduct } from '../features/AdminSlice';
-import Head from '../components/layout/Head';
 import { toast } from 'react-toastify';
 
 const AdminProductsList = () => {
@@ -35,7 +34,6 @@ const AdminProductsList = () => {
 			{isLoading ? <Loader /> 
 			: 
 			<>
-			<Head title={'Admin product list page'}/>
 				<h1>Welcome to the All products page</h1>
 
 				<form>

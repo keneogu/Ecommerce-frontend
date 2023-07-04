@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Head from "../../components/layout/Head";
 import Loader from "../../components/layout/Loader";
 import { FaArrowAltCircleRight } from "react-icons/fa"
 
@@ -14,7 +13,6 @@ const UserProfile = () => {
         <Loader />
       ) : (
         <>
-          <Head title={"Profile Page"} />
           <div className="md:w-full md:mx-auto flex flex-col md:justify-center md:items-center my-16 mx-4">
             <h2 className="my-4 text-slate-700 text-4xl font-bold text-center">My Profile</h2>
             <div>
