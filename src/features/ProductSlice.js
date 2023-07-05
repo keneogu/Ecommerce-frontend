@@ -16,8 +16,8 @@ export const fetchProducts = createAsyncThunk(
     const { search = "", currentPage = 1, price, category, ratings } = features;
     const response = await axios.get(
       category
-        ? `https://nervous-button-bat.cyclic.app/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${ratings}`
-        : `https://nervous-button-bat.cyclic.app/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${ratings}`
+        ? `/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${ratings}`
+        : `/api/v1/products?search=${search}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${ratings}`
     );
     return response?.data;
   }
