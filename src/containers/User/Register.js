@@ -14,7 +14,7 @@ const Register = () => {
 
   const { name, email, password } = formData;
 
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState("https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png");
   const [avatarPrev, setAvatarPrev] = useState("/images/default_avatar.jpg");
 
   const onChange = (e) => {
@@ -85,7 +85,7 @@ const Register = () => {
                   Name
                 </label>
                 <input
-                  type="text"
+                  type="name"
                   id="name"
                   placeholder="Name"
                   name="name"
@@ -103,7 +103,7 @@ const Register = () => {
                   Email
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   placeholder="Email"
                   name="email"
