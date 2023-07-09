@@ -6,8 +6,6 @@ This is a E-commerce website where users can purchase a product, comment on a sp
 ## Live link
 [Live](https://kenz-shop.netlify.app/)
 
-The mobile version is still under construction
-
 ## Built With
 
 - React
@@ -28,7 +26,7 @@ The mobile version is still under construction
 To get a local copy up and running follow these simple example steps.
 
 - Clone the repo by typing `git@github.com:keneogu/Ecommerce-frontend.git`
-- `bundle install` - This will install all the gem files
+- Run `npm install` to install the dependencies
 
 ## Run locally
 
@@ -42,7 +40,7 @@ To get a local copy up and running follow these simple example steps.
 
 - GitHub: [@keneogu](https://github.com/keneogu)
 - Twitter: [@keneogu](https://twitter.com/keneogu)
-- LinkedIn: [@keneogu](https://www.linkedin.com/in/oguagbaka-kenechukwu-8b2289179/)
+- LinkedIn: [@keneogu](https://www.linkedin.com/in/kene-ogu/)
 
 ## 🤝 Contributing
 
