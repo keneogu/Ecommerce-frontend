@@ -15,6 +15,7 @@ This is a E-commerce website where users can purchase a product, comment on a sp
 	- useLocation
 	- useEffect
 	- useCallback
+- React-icons
 - Redux/toolkit
 - HTML
 - CSS
