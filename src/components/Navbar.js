@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { searchItems } from "../features/ProductSlice";
 import { logout } from "../features/UserSlice";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 import Search from "./layout/Search";
 
 const Navbar = () => {
@@ -110,14 +110,15 @@ const Navbar = () => {
         ) : (
           !isLoading && (
             <Link to="/login">
-              <p>Login</p>
+              <FaUser className="text-white mx-2 text-xl md:hidden"/>
+              <p className="xs:hidden md:inline-block">Login</p>
             </Link>
           )
         )}
         <Link to="/cart">
           <div className="flex">
             <p className="mt-1">
-              <FaShoppingCart className="text-orange-700 font-bold" />
+              <FaShoppingCart className="text-orange-700 font-bold text-xl" />
             </p>
             <span className="text-xs">
               <span className="bg-slate-50 rounded-full">{cartTotalQuantity}</span>
